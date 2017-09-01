@@ -34,10 +34,10 @@
 /* The following type definitions hide internal data structures
  */
 #if defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI )
-
+typedef struct libfcrypto_rc4_context {}	libfcrypto_rc4_context_t;
 
 #else
-
+typedef intptr_t libfcrypto_rc4_context_t;
 
 #endif /* defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI ) */
 

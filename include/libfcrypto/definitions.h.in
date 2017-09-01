@@ -24,11 +24,11 @@
 
 #include <libfcrypto/types.h>
 
-#define LIBFCRYPTO_VERSION					@VERSION@
+#define LIBFCRYPTO_VERSION		@VERSION@
 
 /* The version string
  */
-#define LIBFCRYPTO_VERSION_STRING				"@VERSION@"
+#define LIBFCRYPTO_VERSION_STRING	"@VERSION@"
 
 #endif /* !defined( _LIBFCRYPTO_DEFINITIONS_H ) */
 

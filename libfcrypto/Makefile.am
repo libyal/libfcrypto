@@ -11,7 +11,7 @@ libfcrypto_la_SOURCES = \
 	libfcrypto_extern.h \
 	libfcrypto_error.c libfcrypto_error.h \
 	libfcrypto_libcerror.h \
-	libfcrypto_rc4.c libfcrypto_rc4.h \
+	libfcrypto_rc4_context.c libfcrypto_rc4_context.h \
 	libfcrypto_support.c libfcrypto_support.h \
 	libfcrypto_types.h \
 	libfcrypto_unused.h

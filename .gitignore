@@ -119,8 +119,9 @@ stamp-h[1-9]
 /include/libfcrypto/types.h
 /libfcrypto/libfcrypto.rc
 /libfcrypto/libfcrypto_definitions.h
+/tests/*.exe
 /tests/fcrypto_test_error
-/tests/fcrypto_test_identifier
+/tests/fcrypto_test_rc4_context
 /tests/fcrypto_test_support
 /tests/tmp*
 

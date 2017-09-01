@@ -1,7 +1,7 @@
 /*
  * RC4 (de/en)crypt functions
  *
- * Copyright (C) 2008-2016, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -25,7 +25,7 @@
 #include <types.h>
 
 #include "libfcrypto_libcerror.h"
-#include "libfcrypto_rc4.h"
+#include "libfcrypto_rc4_context.h"
 
 /* Creates a context
  * Make sure the value context is referencing, is set to NULL
