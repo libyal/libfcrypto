@@ -1,0 +1,16 @@
+MSVSCPP_FILES = \
+	fcrypto_test_error/fcrypto_test_error.vcproj \
+	fcrypto_test_support/fcrypto_test_support.vcproj \
+	libcerror/libcerror.vcproj \
+	libfcrypto/libfcrypto.vcproj \
+	libfcrypto.sln
+
+EXTRA_DIST = \
+	$(MSVSCPP_FILES)
+
+MAINTAINERCLEANFILES = \
+	Makefile.in
+
+distclean: clean
+	/bin/rm -f Makefile
+

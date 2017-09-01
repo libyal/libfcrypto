@@ -1,0 +1,29 @@
+Source: libfcrypto
+Priority: extra
+Maintainer: Joachim Metz <joachim.metz@gmail.com>
+Build-Depends: debhelper (>= 9), dh-autoreconf, pkg-config
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://github.com/libyal/libfcrypto
+
+Package: libfcrypto
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: libfcrypto-dbg
+Description: Library to support encryption formats
+ libfcrypto is a library to support encryption formats.
+
+Package: libfcrypto-dbg
+Architecture: any
+Section: debug
+Depends: libfcrypto (= ${binary:Version}), ${misc:Depends}
+Description: Debugging symbols for libfcrypto
+ Debugging symbols for libfcrypto.
+
+Package: libfcrypto-dev
+Section: libdevel
+Architecture: any
+Depends: libfcrypto (= ${binary:Version}), ${misc:Depends}
+Description: Header files and libraries for developing applications for libfcrypto
+ Header files and libraries for developing applications for libfcrypto.
+

@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libfcrypto
+Description: Library to support encryption formats
+Version: @VERSION@
+Libs: -L${libdir} -lfcrypto
+Libs.private: @ax_libcerror_pc_libs_private@
+Cflags: -I${includedir}
+
