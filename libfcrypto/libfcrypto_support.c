@@ -37,5 +37,5 @@ const char *libfcrypto_get_version(
 	return( (const char *) LIBFCRYPTO_VERSION_STRING );
 }
 
-#endif
+#endif /* !defined( HAVE_LOCAL_LIBFCRYPTO ) */
 

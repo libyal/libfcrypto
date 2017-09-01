@@ -199,6 +199,10 @@ typedef int64_t off64_t;
 
 #endif
 
+/* The following type definitions hide internal data structures
+ */
+typedef intptr_t libfcrypto_rc4_context_t;
+
 #ifdef __cplusplus
 }
 #endif

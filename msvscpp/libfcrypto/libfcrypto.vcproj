@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\libfcrypto\libfcrypto_rc4.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\libfcrypto\libfcrypto_support.c"
 				>
 			</File>
@@ -201,6 +205,10 @@
 			</File>
 			<File
 				RelativePath="..\..\libfcrypto\libfcrypto_libcerror.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libfcrypto\libfcrypto_rc4.h"
 				>
 			</File>
 			<File

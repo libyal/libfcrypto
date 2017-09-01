@@ -37,7 +37,7 @@ LIBFCRYPTO_EXTERN \
 const char *libfcrypto_get_version(
              void );
 
-#endif
+#endif /* !defined( HAVE_LOCAL_LIBFCRYPTO ) */
 
 #if defined( __cplusplus )
 }
