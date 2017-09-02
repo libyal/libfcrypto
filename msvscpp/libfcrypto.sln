@@ -17,6 +17,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fcrypto_test_rc4_context", 
 		{F6598387-B641-4A8B-93F2-BAD69F77D440} = {F6598387-B641-4A8B-93F2-BAD69F77D440}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fcrypto_test_serpent_context", "fcrypto_test_serpent_context\fcrypto_test_serpent_context.vcproj", "{09B8DA6D-7AFA-4364-8FC3-4F11DE91965F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C6800C6F-AE7E-4AD8-9159-60D592237AD2} = {C6800C6F-AE7E-4AD8-9159-60D592237AD2}
+		{F6598387-B641-4A8B-93F2-BAD69F77D440} = {F6598387-B641-4A8B-93F2-BAD69F77D440}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fcrypto_test_support", "fcrypto_test_support\fcrypto_test_support.vcproj", "{F444C7D9-26E0-49F7-AE7C-0FECAB6182DF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C6800C6F-AE7E-4AD8-9159-60D592237AD2} = {C6800C6F-AE7E-4AD8-9159-60D592237AD2}
@@ -42,6 +48,10 @@ Global
 		{935D1E68-11A2-4AD4-B7DD-735CEFB00314}.Release|Win32.Build.0 = Release|Win32
 		{935D1E68-11A2-4AD4-B7DD-735CEFB00314}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
 		{935D1E68-11A2-4AD4-B7DD-735CEFB00314}.VSDebug|Win32.Build.0 = VSDebug|Win32
+		{09B8DA6D-7AFA-4364-8FC3-4F11DE91965F}.Release|Win32.ActiveCfg = Release|Win32
+		{09B8DA6D-7AFA-4364-8FC3-4F11DE91965F}.Release|Win32.Build.0 = Release|Win32
+		{09B8DA6D-7AFA-4364-8FC3-4F11DE91965F}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
+		{09B8DA6D-7AFA-4364-8FC3-4F11DE91965F}.VSDebug|Win32.Build.0 = VSDebug|Win32
 		{F444C7D9-26E0-49F7-AE7C-0FECAB6182DF}.Release|Win32.ActiveCfg = Release|Win32
 		{F444C7D9-26E0-49F7-AE7C-0FECAB6182DF}.Release|Win32.Build.0 = Release|Win32
 		{F444C7D9-26E0-49F7-AE7C-0FECAB6182DF}.VSDebug|Win32.ActiveCfg = VSDebug|Win32

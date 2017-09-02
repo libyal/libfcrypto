@@ -1,6 +1,7 @@
 MSVSCPP_FILES = \
 	fcrypto_test_error/fcrypto_test_error.vcproj \
 	fcrypto_test_rc4_context/fcrypto_test_rc4_context.vcproj \
+	fcrypto_test_serpent_context/fcrypto_test_serpent_context.vcproj \
 	fcrypto_test_support/fcrypto_test_support.vcproj \
 	libcerror/libcerror.vcproj \
 	libfcrypto/libfcrypto.vcproj \
