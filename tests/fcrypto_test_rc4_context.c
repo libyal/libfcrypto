@@ -966,17 +966,17 @@ int fcrypto_test_rc4_crypt_rfc6229_40bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 40,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          40,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1028,17 +1028,17 @@ int fcrypto_test_rc4_crypt_rfc6229_56bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 56,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          56,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1090,17 +1090,17 @@ int fcrypto_test_rc4_crypt_rfc6229_64bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 64,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          64,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1152,17 +1152,17 @@ int fcrypto_test_rc4_crypt_rfc6229_80bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 80,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          80,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1215,17 +1215,17 @@ int fcrypto_test_rc4_crypt_rfc6229_128bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 128,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          128,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1279,17 +1279,17 @@ int fcrypto_test_rc4_crypt_rfc6229_192bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 192,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          192,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }
@@ -1343,17 +1343,17 @@ int fcrypto_test_rc4_crypt_rfc6229_256bit(
 	int result = 0;
 
 	result = fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-	 key,
-	 256,
-	 expected_output_data_offset_0000,
-	 expected_output_data_offset_00f0,
-	 expected_output_data_offset_01f0,
-	 expected_output_data_offset_02f0,
-	 expected_output_data_offset_03f0,
-	 expected_output_data_offset_05f0,
-	 expected_output_data_offset_07f0,
-	 expected_output_data_offset_0bf0,
-	 expected_output_data_offset_0ff0 );
+	          key,
+	          256,
+	          expected_output_data_offset_0000,
+	          expected_output_data_offset_00f0,
+	          expected_output_data_offset_01f0,
+	          expected_output_data_offset_02f0,
+	          expected_output_data_offset_03f0,
+	          expected_output_data_offset_05f0,
+	          expected_output_data_offset_07f0,
+	          expected_output_data_offset_0bf0,
+	          expected_output_data_offset_0ff0 );
 
 	return( result );
 }

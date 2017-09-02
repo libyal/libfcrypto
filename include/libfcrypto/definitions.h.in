@@ -24,11 +24,19 @@
 
 #include <libfcrypto/types.h>
 
-#define LIBFCRYPTO_VERSION		@VERSION@
+#define LIBFCRYPTO_VERSION			@VERSION@
 
 /* The version string
  */
-#define LIBFCRYPTO_VERSION_STRING	"@VERSION@"
+#define LIBFCRYPTO_VERSION_STRING		"@VERSION@"
+
+/* The Serpent crypt modes
+ */
+enum LIBFCRYPTO_SERPENT_CRYPT_MODES
+{
+	LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT	= 0,
+	LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT	= 1
+};
 
 #endif /* !defined( _LIBFCRYPTO_DEFINITIONS_H ) */
 

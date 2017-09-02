@@ -1,5 +1,5 @@
 /*
- * RC4 (de/en)crypt functions
+ * Serpent (de/en)crypt functions
  *
  * Copyright (C) 2017, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,8 +19,8 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H )
-#define _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H
+#if !defined( _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H )
+#define _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H
 
 #include <common.h>
 #include <types.h>
@@ -33,39 +33,54 @@
 extern "C" {
 #endif
 
-typedef struct libfcrypto_internal_rc4_context libfcrypto_internal_rc4_context_t;
+#define LIBFCRYPTO_SERPENT_NUMBER_OF_EXPANDED_KEY_ELEMENTS	132
 
-struct libfcrypto_internal_rc4_context
+typedef struct libfcrypto_internal_serpent_context libfcrypto_internal_serpent_context_t;
+
+struct libfcrypto_internal_serpent_context
 {
-	/* The permutations table
+	/* The expanded key
 	 */
-	uint8_t permutations[ 256 ];
-
-	/* The permutations table indexes
-	 */
-	uint8_t index[ 2 ];
+	uint32_t expanded_key[ LIBFCRYPTO_SERPENT_NUMBER_OF_EXPANDED_KEY_ELEMENTS ];
 };
 
 LIBFCRYPTO_EXTERN \
-int libfcrypto_rc4_context_initialize(
-     libfcrypto_rc4_context_t **context,
+int libfcrypto_serpent_context_initialize(
+     libfcrypto_serpent_context_t **context,
      libcerror_error_t **error );
 
 LIBFCRYPTO_EXTERN \
-int libfcrypto_rc4_context_free(
-     libfcrypto_rc4_context_t **context,
+int libfcrypto_serpent_context_free(
+     libfcrypto_serpent_context_t **context,
      libcerror_error_t **error );
 
 LIBFCRYPTO_EXTERN \
-int libfcrypto_rc4_context_set_key(
-     libfcrypto_rc4_context_t *context,
+int libfcrypto_serpent_context_set_key(
+     libfcrypto_serpent_context_t *context,
      const uint8_t *key,
      size_t key_bit_size,
      libcerror_error_t **error );
 
+int libfcrypto_internal_serpent_context_encrypt_block(
+     libfcrypto_internal_serpent_context_t *internal_context,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error );
+
+int libfcrypto_internal_serpent_context_decrypt_block(
+     libfcrypto_internal_serpent_context_t *internal_context,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error );
+
 LIBFCRYPTO_EXTERN \
-int libfcrypto_rc4_crypt(
-     libfcrypto_rc4_context_t *context,
+int libfcrypto_serpent_crypt_ecb(
+     libfcrypto_serpent_context_t *context,
+     int mode,
      const uint8_t *input_data,
      size_t input_data_size,
      uint8_t *output_data,
@@ -76,5 +91,5 @@ int libfcrypto_rc4_crypt(
 }
 #endif
 
-#endif /* !defined( _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H ) */
+#endif /* !defined( _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H ) */
 

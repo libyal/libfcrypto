@@ -17,6 +17,7 @@ EXTRA_DIST = \
 check_PROGRAMS = \
 	fcrypto_test_error \
 	fcrypto_test_rc4_context \
+	fcrypto_test_serpent_context \
 	fcrypto_test_support
 
 fcrypto_test_error_SOURCES = \
@@ -37,6 +38,18 @@ fcrypto_test_rc4_context_SOURCES = \
 	fcrypto_test_unused.h
 
 fcrypto_test_rc4_context_LDADD = \
+	../libfcrypto/libfcrypto.la \
+	@LIBCERROR_LIBADD@
+
+fcrypto_test_serpent_context_SOURCES = \
+	fcrypto_test_libcerror.h \
+	fcrypto_test_libfcrypto.h \
+	fcrypto_test_macros.h \
+	fcrypto_test_memory.c fcrypto_test_memory.h \
+	fcrypto_test_serpent_context.c \
+	fcrypto_test_unused.h
+
+fcrypto_test_serpent_context_LDADD = \
 	../libfcrypto/libfcrypto.la \
 	@LIBCERROR_LIBADD@
 

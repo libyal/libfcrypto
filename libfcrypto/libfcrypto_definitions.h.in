@@ -36,49 +36,21 @@
 #else
 #include <byte_stream.h>
 
-#define LIBFCRYPTO_VERSION					@VERSION@
+#define LIBFCRYPTO_VERSION			@VERSION@
 
 /* The version string
  */
-#define LIBFCRYPTO_VERSION_STRING					"@VERSION@"
+#define LIBFCRYPTO_VERSION_STRING		"@VERSION@"
 
-/* The byte order definitions
+/* The Serpent crypt modes
  */
-#define LIBFCRYPTO_ENDIAN_BIG					_BYTE_STREAM_ENDIAN_BIG
-#define LIBFCRYPTO_ENDIAN_LITTLE					_BYTE_STREAM_ENDIAN_LITTLE
-
-/* The GUID identifier version definitions
- */
-enum LIBFCRYPTO_IDENTIFIER_VERSIONS
+enum LIBFCRYPTO_SERPENT_CRYPT_MODES
 {
-	LIBFCRYPTO_IDENTIFIER_VERSION_TIME_BASED			= 1,
-	LIBFCRYPTO_IDENTIFIER_VERSION_DCE				= 2,
-	LIBFCRYPTO_IDENTIFIER_VERSION_NAME_BASED			= 3,
-	LIBFCRYPTO_IDENTIFIER_VERSION_RANDOM_BASED		= 4
+	LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT	= 0,
+	LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT	= 1
 };
 
-/* The string format definition flags
- */
-enum LIBFCRYPTO_STRING_FORMAT_FLAGS
-{
-	/* Format the using lower case
-	 */
-	LIBFCRYPTO_STRING_FORMAT_FLAG_USE_LOWER_CASE		= 0x00000001UL,
+#endif /* !defined( HAVE_LOCAL_LIBFCRYPTO ) */
 
-	/* Format the using upper case
-	 */
-	LIBFCRYPTO_STRING_FORMAT_FLAG_USE_UPPER_CASE		= 0x00000002UL,
-
-	/* Format the using mixed case
-	 */
-	LIBFCRYPTO_STRING_FORMAT_FLAG_USE_MIXED_CASE		= 0x00000003UL,
-
-	/* Format the using surrounding braces { GUID }
-	 */
-	LIBFCRYPTO_STRING_FORMAT_FLAG_USE_SURROUNDING_BRACES	= 0x00000004UL
-};
-
-#endif
-
-#endif
+#endif /* !defined( LIBFCRYPTO_INTERNAL_DEFINITIONS_H ) */
 
