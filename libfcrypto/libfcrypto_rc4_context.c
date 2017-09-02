@@ -27,7 +27,7 @@
 #include "libfcrypto_libcerror.h"
 #include "libfcrypto_rc4_context.h"
 
-/* Creates a context
+/* Creates a RC4 context
  * Make sure the value context is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
@@ -101,7 +101,7 @@ on_error:
 	return( -1 );
 }
 
-/* Frees a context
+/* Frees a RC4 context
  * Returns 1 if successful or -1 on error
  */
 int libfcrypto_rc4_context_free(
@@ -189,7 +189,8 @@ int libfcrypto_rc4_context_set_key(
 
 		return( -1 );
 	}
-	if( ( key_bit_size == 0 )
+	if( ( key_bit_size < 40 )
+	 || ( key_bit_size > 2048 )
 	 || ( ( key_bit_size % 8 ) != 0 ) )
 	{
 		libcerror_error_set(

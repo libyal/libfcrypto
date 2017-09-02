@@ -25,6 +25,7 @@
 #include <common.h>
 #include <types.h>
 
+#include "libfcrypto_extern.h"
 #include "libfcrypto_libcerror.h"
 
 #if defined( __cplusplus )
@@ -44,20 +45,24 @@ struct libfcrypto_internal_rc4_context
 	uint8_t index[ 2 ];
 };
 
+LIBFCRYPTO_EXTERN \
 int libfcrypto_rc4_context_initialize(
      libfcrypto_rc4_context_t **context,
      libcerror_error_t **error );
 
+LIBFCRYPTO_EXTERN \
 int libfcrypto_rc4_context_free(
      libfcrypto_rc4_context_t **context,
      libcerror_error_t **error );
 
+LIBFCRYPTO_EXTERN \
 int libfcrypto_rc4_context_set_key(
      libfcrypto_rc4_context_t *context,
      const uint8_t *key,
      size_t key_bit_size,
      libcerror_error_t **error );
 
+LIBFCRYPTO_EXTERN \
 int libfcrypto_rc4_crypt(
      libfcrypto_rc4_context_t *context,
      const uint8_t *input_data,

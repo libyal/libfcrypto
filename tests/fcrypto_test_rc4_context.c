@@ -33,10 +33,6 @@
 #include "fcrypto_test_memory.h"
 #include "fcrypto_test_unused.h"
 
-#include "../libfcrypto/libfcrypto_rc4_context.h"
-
-#if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT )
-
 /* Tests the libfcrypto_rc4_context_initialize function
  * Returns 1 if successful or 0 if not
  */
@@ -238,8 +234,12 @@ on_error:
 int fcrypto_test_rc4_context_free(
      void )
 {
-	libcerror_error_t *error = NULL;
-	int result               = 0;
+#if defined( HAVE_FCRYPTO_TEST_MEMORY )
+	libfcrypto_rc4_context_t *rc4_context = NULL;
+#endif
+
+	libcerror_error_t *error              = NULL;
+	int result                            = 0;
 
 	/* Test error cases
 	 */
@@ -259,6 +259,73 @@ int fcrypto_test_rc4_context_free(
 	libcerror_error_free(
 	 &error );
 
+#if defined( HAVE_FCRYPTO_TEST_MEMORY )
+	/* Initialize test
+	 */
+	result = libfcrypto_rc4_context_initialize(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test libfcrypto_rc4_context_free with memset failing
+	 */
+	fcrypto_test_memset_attempts_before_fail = 0;
+
+	result = libfcrypto_rc4_context_free(
+	          &rc4_context,
+	          &error );
+
+	if( fcrypto_test_memset_attempts_before_fail != -1 )
+	{
+		fcrypto_test_memset_attempts_before_fail = -1;
+	}
+	else
+	{
+		FCRYPTO_TEST_ASSERT_EQUAL_INT(
+		 "result",
+		 result,
+		 -1 );
+
+		FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+		 "error",
+		 error );
+
+		libcerror_error_free(
+		 &error );
+	}
+	/* Clean up
+	 */
+	result = libfcrypto_rc4_context_free(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+#endif /* defined( HAVE_FCRYPTO_TEST_MEMORY ) */
+
 	return( 1 );
 
 on_error:
@@ -267,10 +334,380 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
+#if defined( HAVE_FCRYPTO_TEST_MEMORY )
+	if( rc4_context != NULL )
+	{
+		libfcrypto_rc4_context_free(
+		 &rc4_context,
+		 NULL );
+	}
+#endif
 	return( 0 );
 }
 
-#endif /* defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
+/* Tests the libfcrypto_rc4_context_set_key function
+ * Returns 1 if successful or 0 if not
+ */
+int fcrypto_test_rc4_context_set_key(
+     void )
+{
+	libcerror_error_t *error              = NULL;
+	libfcrypto_rc4_context_t *rc4_context = NULL;
+	int result                            = 0;
+
+	/* Initialize test
+	 */
+	result = libfcrypto_rc4_context_initialize(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test set key
+	 */
+	result = libfcrypto_rc4_context_set_key(
+	          rc4_context,
+	          (uint8_t *) "test1",
+	          40,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test error cases
+	 */
+	result = libfcrypto_rc4_context_set_key(
+	          NULL,
+	          (uint8_t *) "test1",
+	          40,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_context_set_key(
+	          rc4_context,
+	          NULL,
+	          40,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_context_set_key(
+	          rc4_context,
+	          (uint8_t *) "test1",
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up
+	 */
+	result = libfcrypto_rc4_context_free(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( rc4_context != NULL )
+	{
+		libfcrypto_rc4_context_free(
+		 &rc4_context,
+		 NULL );
+	}
+	return( 0 );
+}
+
+/* Tests the libfcrypto_rc4_crypt function
+ * Returns 1 if successful or 0 if not
+ */
+int fcrypto_test_rc4_crypt(
+     void )
+{
+	uint8_t input_data[ 48 ];
+	uint8_t output_data[ 48 ];
+
+	libcerror_error_t *error              = NULL;
+	libfcrypto_rc4_context_t *rc4_context = NULL;
+	int result                            = 0;
+
+	/* Initialize test
+	 */
+	result = libfcrypto_rc4_context_initialize(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfcrypto_rc4_context_set_key(
+	          rc4_context,
+	          (uint8_t *) "test1",
+	          40,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test de- or encrypting a buffer of data
+	 */
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          input_data,
+	          48,
+	          output_data,
+	          48,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+/* TODO check output_data */
+
+	/* Test error cases
+	 */
+	result = libfcrypto_rc4_crypt(
+	          NULL,
+	          input_data,
+	          48,
+	          output_data,
+	          48,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          NULL,
+	          48,
+	          output_data,
+	          48,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          input_data,
+	          (size_t) SSIZE_MAX + 1,
+	          output_data,
+	          48,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          input_data,
+	          48,
+	          NULL,
+	          48,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          input_data,
+	          48,
+	          output_data,
+	          (size_t) SSIZE_MAX + 1,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_rc4_crypt(
+	          rc4_context,
+	          input_data,
+	          48,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up
+	 */
+	result = libfcrypto_rc4_context_free(
+	          &rc4_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "rc4_context",
+	 rc4_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( rc4_context != NULL )
+	{
+		libfcrypto_rc4_context_free(
+		 &rc4_context,
+		 NULL );
+	}
+	return( 0 );
+}
 
 /* The main program
  */
@@ -287,8 +724,6 @@ int main(
 	FCRYPTO_TEST_UNREFERENCED_PARAMETER( argc )
 	FCRYPTO_TEST_UNREFERENCED_PARAMETER( argv )
 
-#if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT )
-
 	FCRYPTO_TEST_RUN(
 	 "libfcrypto_rc4_context_initialize",
 	 fcrypto_test_rc4_context_initialize );
@@ -297,9 +732,13 @@ int main(
 	 "libfcrypto_rc4_context_free",
 	 fcrypto_test_rc4_context_free );
 
-	/* TODO: add tests for libfcrypto_rc4_context_set_key */
+	FCRYPTO_TEST_RUN(
+	 "libfcrypto_rc4_context_set_key",
+	 fcrypto_test_rc4_context_set_key );
 
-#endif /* defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
+	FCRYPTO_TEST_RUN(
+	 "libfcrypto_rc4_crypt",
+	 fcrypto_test_rc4_crypt );
 
 	return( EXIT_SUCCESS );
 

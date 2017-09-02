@@ -90,6 +90,49 @@ int libfcrypto_error_backtrace_sprint(
      char *string,
      size_t size );
 
+/* -------------------------------------------------------------------------
+ * RC4 context functions
+ * ------------------------------------------------------------------------- */
+
+/* Creates a RC4 context
+ * Make sure the value context is referencing, is set to NULL
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_rc4_context_initialize(
+     libfcrypto_rc4_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Frees a RC4 context
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_rc4_context_free(
+     libfcrypto_rc4_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Sets the key
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_rc4_context_set_key(
+     libfcrypto_rc4_context_t *context,
+     const uint8_t *key,
+     size_t key_bit_size,
+     libfcrypto_error_t **error );
+
+/* De- or encrypts a buffer of data using RC4
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_rc4_crypt(
+     libfcrypto_rc4_context_t *context,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
 #if defined( __cplusplus )
 }
 #endif
