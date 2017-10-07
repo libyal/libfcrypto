@@ -5,13 +5,13 @@ Summary: Library to support encryption formats
 Group: System Environment/Libraries
 License: LGPL
 Source: %{name}-%{version}.tar.gz
-URL: https://github.com/libyal/libfcrypto/
+URL: https://github.com/libyal/libfcrypto
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 @libfcrypto_spec_requires@ @ax_libcerror_spec_requires@
 @libfcrypto_spec_build_requires@ @ax_libcerror_spec_build_requires@
 
 %description
-libfcrypto is a library to support encryption formats
+Library to support encryption formats
 
 %package devel
 Summary: Header files and libraries for developing applications for libfcrypto
