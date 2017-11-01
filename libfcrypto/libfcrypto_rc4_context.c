@@ -218,10 +218,9 @@ int libfcrypto_rc4_context_set_key(
 	{
 		key_byte_index = byte_value % key_byte_size;
 
-		/* Note that the following operations are implicitly modulus 256
+		/* Note that the following operations are modulus 256
 		 */
-		values_index += internal_context->permutations[ byte_value ];
-		values_index += key[ key_byte_index ];
+		values_index = ( values_index + internal_context->permutations[ byte_value ] + key[ key_byte_index ] ) & 0xff;
 
 		permutation_value = internal_context->permutations[ byte_value ];
 		internal_context->permutations[ byte_value ] = internal_context->permutations[ values_index ];
@@ -326,16 +325,16 @@ int libfcrypto_rc4_crypt(
 
 	while( data_offset < input_data_size )
 	{
-		/* Note that the following operations are implicitly modulus 256
+		/* Note that the following operations are modulus 256
 		 */
-		values_index1 += 1;
-		values_index2 += internal_context->permutations[ values_index1 ];
+		values_index1 = ( values_index1 + 1 ) & 0xff;
+		values_index2 = ( values_index2 + internal_context->permutations[ values_index1 ] ) & 0xff;
 
 		permutation_value                               = internal_context->permutations[ values_index1 ];
 		internal_context->permutations[ values_index1 ] = internal_context->permutations[ values_index2 ];
 		internal_context->permutations[ values_index2 ] = permutation_value;
 
-		permutation_value += internal_context->permutations[ values_index1 ];
+		permutation_value = ( permutation_value + internal_context->permutations[ values_index1 ] ) & 0xff;
 
 		output_data[ data_offset ] = input_data[ data_offset ] ^ internal_context->permutations[ permutation_value ];
 
