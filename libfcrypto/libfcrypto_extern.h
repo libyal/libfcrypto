@@ -28,17 +28,13 @@
  */
 #if !defined( HAVE_LOCAL_LIBFCRYPTO )
 
-/* If libtool DLL support is enabled set LIBFCRYPTO_DLL_EXPORT
- * before including libfcrypto/extern.h
- */
-#if defined( _WIN32 ) && defined( DLL_EXPORT )
-#define LIBFCRYPTO_DLL_EXPORT
-#endif
-
 #include <libfcrypto/extern.h>
 
+#define LIBFCRYPTO_EXTERN_VARIABLE	LIBFCRYPTO_EXTERN
+
 #else
-#define LIBFCRYPTO_EXTERN	/* extern */
+#define LIBFCRYPTO_EXTERN		/* extern */
+#define LIBFCRYPTO_EXTERN_VARIABLE	extern
 
 #endif /* !defined( HAVE_LOCAL_LIBFCRYPTO ) */
 

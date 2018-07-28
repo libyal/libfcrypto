@@ -110,6 +110,8 @@ int fcrypto_test_rc4_context_initialize(
 	          &rc4_context,
 	          &error );
 
+	rc4_context = NULL;
+
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
@@ -121,8 +123,6 @@ int fcrypto_test_rc4_context_initialize(
 
 	libcerror_error_free(
 	 &error );
-
-	rc4_context = NULL;
 
 #if defined( HAVE_FCRYPTO_TEST_MEMORY )
 

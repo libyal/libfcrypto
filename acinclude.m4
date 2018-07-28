@@ -6,3 +6,4 @@ dnl Function to detect if libfcrypto dependencies are available
 AC_DEFUN([AX_LIBFCRYPTO_CHECK_LOCAL],
   [dnl No additional checks.
   ])
+

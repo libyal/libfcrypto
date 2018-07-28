@@ -110,6 +110,8 @@ int fcrypto_test_serpent_context_initialize(
 	          &serpent_context,
 	          &error );
 
+	serpent_context = NULL;
+
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
@@ -121,8 +123,6 @@ int fcrypto_test_serpent_context_initialize(
 
 	libcerror_error_free(
 	 &error );
-
-	serpent_context = NULL;
 
 #if defined( HAVE_FCRYPTO_TEST_MEMORY )
 
