@@ -9,6 +9,8 @@ Homepage: https://github.com/libyal/libfcrypto
 Package: libfcrypto
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libfcrypto1
+Replaces: libfcrypto1
 Suggests: libfcrypto-dbg
 Description: Library to support encryption formats
  libfcrypto is a library to support encryption formats.
