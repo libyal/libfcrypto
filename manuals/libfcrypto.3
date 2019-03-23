@@ -1,11 +1,9 @@
-.Dd September  1, 2017
+.Dd March 23, 2019
 .Dt libfcrypto 3
 .Os libfcrypto
 .Sh NAME
 .Nm libfcrypto.h
 .Nd Library to support encryption formats
-.Sh LIBRARY
-.Lb libfcrypto
 .Sh SYNOPSIS
 .In libfcrypto.h
 .Pp
@@ -17,13 +15,33 @@ Error functions
 .Ft void
 .Fn libfcrypto_error_free "libfcrypto_error_t **error"
 .Ft int
-.Fn libfcrypto_error_fprint "libfcrypto_error_t *error, FILE *stream"
+.Fn libfcrypto_error_fprint "libfcrypto_error_t *error" "FILE *stream"
 .Ft int
-.Fn libfcrypto_error_sprint "libfcrypto_error_t *error, char *string, size_t size"
+.Fn libfcrypto_error_sprint "libfcrypto_error_t *error" "char *string" "size_t size"
 .Ft int
-.Fn libfcrypto_error_backtrace_fprint "libfcrypto_error_t *error, FILE *stream"
+.Fn libfcrypto_error_backtrace_fprint "libfcrypto_error_t *error" "FILE *stream"
 .Ft int
-.Fn libfcrypto_error_backtrace_sprint "libfcrypto_error_t *error, char *string, size_t size"
+.Fn libfcrypto_error_backtrace_sprint "libfcrypto_error_t *error" "char *string" "size_t size"
+.Pp
+RC4 context functions
+.Ft int
+.Fn libfcrypto_rc4_context_initialize "libfcrypto_rc4_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_rc4_context_free "libfcrypto_rc4_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_rc4_context_set_key "libfcrypto_rc4_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_rc4_crypt "libfcrypto_rc4_context_t *context" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Pp
+Serpent context functions
+.Ft int
+.Fn libfcrypto_serpent_context_initialize "libfcrypto_serpent_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_serpent_context_free "libfcrypto_serpent_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_serpent_context_set_key "libfcrypto_serpent_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_serpent_crypt_ecb "libfcrypto_serpent_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
 .Sh DESCRIPTION
 The
 .Fn libfcrypto_get_version
@@ -41,7 +59,7 @@ Please report bugs of any kind on the project issue tracker: https://github.com/
 These man pages are generated from "libfcrypto.h".
 .Sh COPYRIGHT
 Copyright (C) 2017-2019, Joachim Metz <joachim.metz@gmail.com>.
-
+.sp
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .Sh SEE ALSO

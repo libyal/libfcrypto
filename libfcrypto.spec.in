@@ -13,6 +13,14 @@ BuildRequires: gcc @ax_libcerror_spec_build_requires@
 %description -n libfcrypto
 Library to support encryption formats
 
+%package -n libfcrypto-static
+Summary: Library to support encryption formats
+Group: Development/Libraries
+Requires: libfcrypto = %{version}-%{release}
+
+%description -n libfcrypto-static
+Static library version of libfcrypto.
+
 %package -n libfcrypto-devel
 Summary: Header files and libraries for developing applications for libfcrypto
 Group: Development/Libraries
@@ -45,11 +53,16 @@ rm -rf %{buildroot}
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/*.so.*
 
+%files -n libfcrypto-static
+%defattr(644,root,root,755)
+%license COPYING
+%doc AUTHORS README
+%attr(755,root,root) %{_libdir}/*.a
+
 %files -n libfcrypto-devel
 %defattr(644,root,root,755)
 %license COPYING
 %doc AUTHORS README
-%{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libfcrypto.pc
