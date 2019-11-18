@@ -25,7 +25,7 @@ then
 
 		make install DESTDIR=${PWD}/osx-pkg;
 		mkdir -p ${PWD}/osx-pkg/usr/share/doc/libfcrypto;
-		cp AUTHORS COPYING NEWS README ${PWD}/osx-pkg/usr/share/doc/libfcrypto;
+		cp AUTHORS COPYING COPYING.LESSER NEWS README ${PWD}/osx-pkg/usr/share/doc/libfcrypto;
 
 		pkgbuild --root osx-pkg --identifier com.github.libyal.libfcrypto --version ${VERSION} --ownership recommended ../libfcrypto-${VERSION}.pkg;
 	fi
