@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H )
-#define _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H
+#if !defined( _LIBFCRYPTO_SERPENT_CONTEXT_H )
+#define _LIBFCRYPTO_SERPENT_CONTEXT_H
 
 #include <common.h>
 #include <types.h>
@@ -91,5 +91,5 @@ int libfcrypto_serpent_crypt_ecb(
 }
 #endif
 
-#endif /* !defined( _LIBFCRYPTO_INTERNAL_SERPENT_CONTEXT_H ) */
+#endif /* !defined( _LIBFCRYPTO_SERPENT_CONTEXT_H ) */
 

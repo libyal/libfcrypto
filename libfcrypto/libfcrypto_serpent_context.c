@@ -1,3 +1,24 @@
+/*
+ * Serpent (de/en)crypt functions
+ *
+ * Copyright (C) 2017-2019, Joachim Metz <joachim.metz@gmail.com>
+ *
+ * Refer to AUTHORS for acknowledgements.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include <common.h>
 #include <byte_stream.h>
 #include <memory.h>
@@ -1425,14 +1446,12 @@ int libfcrypto_internal_serpent_context_encrypt_block(
      size_t output_data_size,
      libcerror_error_t **error )
 {
-	uint32_t *aligned_input_data  = NULL;
-	uint32_t *aligned_output_data = NULL;
-	static char *function         = "libfcrypto_internal_serpent_context_encrypt_block";
-	uint32_t value0               = 0;
-	uint32_t value1               = 0;
-	uint32_t value2               = 0;
-	uint32_t value3               = 0;
-	uint32_t value4               = 0;
+	static char *function = "libfcrypto_internal_serpent_context_encrypt_block";
+	uint32_t value0       = 0;
+	uint32_t value1       = 0;
+	uint32_t value2       = 0;
+	uint32_t value3       = 0;
+	uint32_t value4       = 0;
 
 	if( internal_context == NULL )
 	{
@@ -1452,17 +1471,6 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
 		 "%s: invalid input data.",
-		 function );
-
-		return( -1 );
-	}
-	if( ( (intptr_t) input_data % 4 ) != 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid input data - not 32-bit aligned.",
 		 function );
 
 		return( -1 );
@@ -1500,17 +1508,6 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 
 		return( -1 );
 	}
-	if( ( (intptr_t) output_data % 4 ) != 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid output data - not 32-bit aligned.",
-		 function );
-
-		return( -1 );
-	}
 	if( output_data_size < 16 )
 	{
 		libcerror_error_set(
@@ -1544,13 +1541,26 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 
 		return( -1 );
 	}
-	aligned_input_data  = (uint32_t *) input_data;
-	aligned_output_data = (uint32_t *) output_data;
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 0 ] ),
+	 value0 );
 
-	value0 = aligned_input_data[ 0 ] ^ internal_context->expanded_key[ 0 ];
-	value1 = aligned_input_data[ 1 ] ^ internal_context->expanded_key[ 1 ];
-	value2 = aligned_input_data[ 2 ] ^ internal_context->expanded_key[ 2 ];
-	value3 = aligned_input_data[ 3 ] ^ internal_context->expanded_key[ 3 ];
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 4 ] ),
+	 value1 );
+
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 8 ] ),
+	 value2 );
+
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 12 ] ),
+	 value3 );
+
+	value0 ^= internal_context->expanded_key[ 0 ];
+	value1 ^= internal_context->expanded_key[ 1 ];
+	value2 ^= internal_context->expanded_key[ 2 ];
+	value3 ^= internal_context->expanded_key[ 3 ];
 
 	libfcrypto_serpent_calculate_forward_substitution0(
 	 value0,
@@ -1838,10 +1848,26 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 	 value2,
 	 value0 );
 
-	aligned_output_data[ 0 ] = value0 ^ internal_context->expanded_key[ 128 ];
-	aligned_output_data[ 1 ] = value1 ^ internal_context->expanded_key[ 129 ];
-	aligned_output_data[ 2 ] = value2 ^ internal_context->expanded_key[ 130 ];
-	aligned_output_data[ 3 ] = value3 ^ internal_context->expanded_key[ 131 ];
+	value0 ^= internal_context->expanded_key[ 128 ];
+	value1 ^= internal_context->expanded_key[ 129 ];
+	value2 ^= internal_context->expanded_key[ 130 ];
+	value3 ^= internal_context->expanded_key[ 131 ];
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 0 ] ),
+	 value0 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 4 ] ),
+	 value1 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 8 ] ),
+	 value2 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 12 ] ),
+	 value3 );
 
 	return( 1 );
 }
@@ -1858,14 +1884,12 @@ int libfcrypto_internal_serpent_context_decrypt_block(
      size_t output_data_size,
      libcerror_error_t **error  )
 {
-	uint32_t *aligned_input_data  = NULL;
-	uint32_t *aligned_output_data = NULL;
-	static char *function         = "libfcrypto_internal_serpent_context_decrypt_block";
-	uint32_t value0               = 0;
-	uint32_t value1               = 0;
-	uint32_t value2               = 0;
-	uint32_t value3               = 0;
-	uint32_t value4               = 0;
+	static char *function = "libfcrypto_internal_serpent_context_decrypt_block";
+	uint32_t value0       = 0;
+	uint32_t value1       = 0;
+	uint32_t value2       = 0;
+	uint32_t value3       = 0;
+	uint32_t value4       = 0;
 
 	if( internal_context == NULL )
 	{
@@ -1885,17 +1909,6 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
 		 "%s: invalid input data.",
-		 function );
-
-		return( -1 );
-	}
-	if( ( (intptr_t) input_data % 4 ) != 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid input data - not 32-bit aligned.",
 		 function );
 
 		return( -1 );
@@ -1933,17 +1946,6 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 
 		return( -1 );
 	}
-	if( ( (intptr_t) output_data % 4 ) != 0 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid output data - not 32-bit aligned.",
-		 function );
-
-		return( -1 );
-	}
 	if( output_data_size < 16 )
 	{
 		libcerror_error_set(
@@ -1977,13 +1979,26 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 
 		return( -1 );
 	}
-	aligned_input_data  = (uint32_t *) input_data;
-	aligned_output_data = (uint32_t *) output_data;
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 0 ] ),
+	 value0 );
 
-	value0 = aligned_input_data[ 0 ] ^ internal_context->expanded_key[ 128 ];
-	value1 = aligned_input_data[ 1 ] ^ internal_context->expanded_key[ 129 ];
-	value2 = aligned_input_data[ 2 ] ^ internal_context->expanded_key[ 130 ];
-	value3 = aligned_input_data[ 3 ] ^ internal_context->expanded_key[ 131 ];
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 4 ] ),
+	 value1 );
+
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 8 ] ),
+	 value2 );
+
+	byte_stream_copy_to_uint32_little_endian(
+	 &( input_data[ 12 ] ),
+	 value3 );
+
+	value0 ^= internal_context->expanded_key[ 128 ];
+	value1 ^= internal_context->expanded_key[ 129 ];
+	value2 ^= internal_context->expanded_key[ 130 ];
+	value3 ^= internal_context->expanded_key[ 131 ];
 
 	libfcrypto_serpent_calculate_reverse_substitution7(
 	 value0,
@@ -2271,10 +2286,26 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 	 value0,
 	 value3 );
 
-	aligned_output_data[ 0 ] = value2 ^ internal_context->expanded_key[ 0 ];
-	aligned_output_data[ 1 ] = value3 ^ internal_context->expanded_key[ 1 ];
-	aligned_output_data[ 2 ] = value1 ^ internal_context->expanded_key[ 2 ];
-	aligned_output_data[ 3 ] = value4 ^ internal_context->expanded_key[ 3 ];
+	value2 ^= internal_context->expanded_key[ 0 ];
+	value3 ^= internal_context->expanded_key[ 1 ];
+	value1 ^= internal_context->expanded_key[ 2 ];
+	value4 ^= internal_context->expanded_key[ 3 ];
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 0 ] ),
+	 value2 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 4 ] ),
+	 value3 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 8 ] ),
+	 value1 );
+
+	byte_stream_copy_from_uint32_little_endian(
+	 &( output_data[ 12 ] ),
+	 value4 );
 
 	return( 1 );
 }

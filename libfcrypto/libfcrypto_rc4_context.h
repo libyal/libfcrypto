@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H )
-#define _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H
+#if !defined( _LIBFCRYPTO_RC4_CONTEXT_H )
+#define _LIBFCRYPTO_RC4_CONTEXT_H
 
 #include <common.h>
 #include <types.h>
@@ -76,5 +76,5 @@ int libfcrypto_rc4_crypt(
 }
 #endif
 
-#endif /* !defined( _LIBFCRYPTO_INTERNAL_RC4_CONTEXT_H ) */
+#endif /* !defined( _LIBFCRYPTO_RC4_CONTEXT_H ) */
 
