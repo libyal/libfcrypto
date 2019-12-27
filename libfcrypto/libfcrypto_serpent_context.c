@@ -689,8 +689,12 @@ int libfcrypto_serpent_context_set_key(
      size_t key_bit_size,
      libcerror_error_t **error )
 {
+	uint8_t key_data[ 32 ];
+
 	libfcrypto_internal_serpent_context_t *internal_context = NULL;
 	static char *function                                   = "libfcrypto_serpent_context_set_key";
+	size_t bit_shift                                        = 0;
+	size_t key_byte_offset                                  = 0;
 	size_t key_byte_size                                    = 0;
 	uint32_t value0                                         = 0;
 	uint32_t value1                                         = 0;
@@ -738,6 +742,20 @@ int libfcrypto_serpent_context_set_key(
 		return( -1 );
 	}
 	if( memory_set(
+	     key_data,
+	     0,
+	     32  ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
+		 "%s: unable to clear key data.",
+		 function );
+
+		goto on_error;
+	}
+	if( memory_set(
 	     internal_context->expanded_key,
 	     0,
 	     sizeof( uint32_t ) * LIBFCRYPTO_SERPENT_NUMBER_OF_EXPANDED_KEY_ELEMENTS ) == NULL )
@@ -749,42 +767,52 @@ int libfcrypto_serpent_context_set_key(
 		 "%s: unable to clear expanded key.",
 		 function );
 
-		return( -1 );
+		goto on_error;
 	}
 	/* 1. Copy and pad the provided key
 	 */
 	key_byte_size = key_bit_size / 8;
 
 	if( memory_copy(
-	     internal_context->expanded_key,
+	     key_data,
 	     key,
-	     sizeof( uint8_t ) * key_byte_size ) == NULL )
+	     key_byte_size ) == NULL )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_MEMORY,
-		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
-		 "%s: unable to copy key.",
+		 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+		 "%s: unable to copy key to key data.",
 		 function );
 
-		return( -1 );
+		goto on_error;
 	}
 	if( key_byte_size < 32 )
 	{
-		( (uint8_t *) internal_context->expanded_key )[ key_byte_size ] = 1;
+		key_data[ key_byte_size ] = 1;
+	}
+	for( key_byte_offset = 0;
+	     key_byte_offset < 32;
+	     key_byte_offset += 4 )
+	{
+		byte_stream_copy_to_uint32_little_endian(
+		 &( key_data[ key_byte_offset ] ),
+		 value0 );
+
+		internal_context->expanded_key[ expanded_key_index++ ] = value0;
 	}
 	/* 2. Calculate the prekeys
 	 */
-	value0 = ( internal_context->expanded_key )[ 3 ];
-	value1 = ( internal_context->expanded_key )[ 4 ];
-	value2 = ( internal_context->expanded_key )[ 5 ];
-	value3 = ( internal_context->expanded_key )[ 6 ];
-	value4 = ( internal_context->expanded_key )[ 7 ];
+	value0 = internal_context->expanded_key[ 3 ];
+	value1 = internal_context->expanded_key[ 4 ];
+	value2 = internal_context->expanded_key[ 5 ];
+	value3 = internal_context->expanded_key[ 6 ];
+	value4 = internal_context->expanded_key[ 7 ];
 
 	libfcrypto_serpent_calculate_expanded_key(
 	 internal_context->expanded_key,
 	 0,
-	 ( internal_context->expanded_key )[ 0 ],
+	 internal_context->expanded_key[ 0 ],
 	 value0,
 	 value4,
 	 value2 );
@@ -792,7 +820,7 @@ int libfcrypto_serpent_context_set_key(
 	libfcrypto_serpent_calculate_expanded_key(
 	 internal_context->expanded_key,
 	 1,
-	 ( internal_context->expanded_key )[ 1 ],
+	 internal_context->expanded_key[ 1 ],
 	 value1,
 	 value0,
 	 value3 );
@@ -1432,6 +1460,19 @@ int libfcrypto_serpent_context_set_key(
 	internal_context->expanded_key[ 3 ] = value3;
 
 	return( 1 );
+
+on_error:
+	memory_set(
+	 key_data,
+	 0,
+	 32 );
+
+	memory_set(
+	 internal_context->expanded_key,
+	 0,
+	 sizeof( uint32_t ) * LIBFCRYPTO_SERPENT_NUMBER_OF_EXPANDED_KEY_ELEMENTS );
+
+	return( -1 );
 }
 
 /* Encrypts a block of data using Serpent
