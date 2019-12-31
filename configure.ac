@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libfcrypto],
- [20191227],
+ [20191231],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
