@@ -1,7 +1,7 @@
 /*
  * Library serpent_context type test program
  *
- * Copyright (C) 2017-2019, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017-2020, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *

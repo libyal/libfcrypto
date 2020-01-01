@@ -1,7 +1,7 @@
 /*
  * Serpent (de/en)crypt functions
  *
- * Copyright (C) 2017-2019, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017-2020, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -693,7 +693,6 @@ int libfcrypto_serpent_context_set_key(
 
 	libfcrypto_internal_serpent_context_t *internal_context = NULL;
 	static char *function                                   = "libfcrypto_serpent_context_set_key";
-	size_t bit_shift                                        = 0;
 	size_t key_byte_offset                                  = 0;
 	size_t key_byte_size                                    = 0;
 	uint32_t value0                                         = 0;

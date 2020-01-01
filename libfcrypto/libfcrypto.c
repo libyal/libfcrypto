@@ -1,7 +1,7 @@
 /*
  * Library to support encryption formats
  *
- * Copyright (C) 2017-2019, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017-2020, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
