@@ -24,6 +24,7 @@
 #include <memory.h>
 #include <types.h>
 
+#include "libfcrypto_definitions.h"
 #include "libfcrypto_libcerror.h"
 #include "libfcrypto_rc4_context.h"
 

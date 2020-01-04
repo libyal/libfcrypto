@@ -78,6 +78,18 @@ int libfcrypto_internal_serpent_context_decrypt_block(
      libcerror_error_t **error );
 
 LIBFCRYPTO_EXTERN \
+int libfcrypto_serpent_crypt_cbc(
+     libfcrypto_serpent_context_t *context,
+     int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error );
+
+LIBFCRYPTO_EXTERN \
 int libfcrypto_serpent_crypt_ecb(
      libfcrypto_serpent_context_t *context,
      int mode,

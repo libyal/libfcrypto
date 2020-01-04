@@ -2350,6 +2350,337 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 	return( 1 );
 }
 
+/* De- or encrypts a block of data using Serpent-CBC (Cipher Block Chaining)
+ * The size must be a multitude of the Serpent block size (16 byte)
+ * Returns 1 if successful or -1 on error
+ */
+int libfcrypto_serpent_crypt_cbc(
+     libfcrypto_serpent_context_t *context,
+     int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error )
+{
+	uint8_t internal_initialization_vector[ 16 ];
+
+	static char *function = "libfcrypto_serpent_context_crypt_cbc";
+	size_t data_offset    = 0;
+
+#if !defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+	uint8_t block_index   = 0;
+#endif
+
+	if( context == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid context.",
+		 function );
+
+		return( -1 );
+	}
+	if( initialization_vector == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid initialization vector.",
+		 function );
+
+		return( -1 );
+	}
+	if( initialization_vector_size != 16 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid initialization vector size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+	if( ( mode != LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT )
+	 && ( mode != LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported mode.",
+		 function );
+
+		return( -1 );
+	}
+	if( input_data == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid input data.",
+		 function );
+
+		return( -1 );
+	}
+	if( input_data_size > (size_t) SSIZE_MAX )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
+		 "%s: invalid input data size value exceeds maximum.",
+		 function );
+
+		return( -1 );
+	}
+	if( input_data_size < 16 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
+		 "%s: invalid input data size value too small.",
+		 function );
+
+		return( -1 );
+	}
+	/* Check if the input data size is a multitude of 16-byte
+	 */
+	if( ( input_data_size & (size_t) 0x0f ) != 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid input data size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+	if( output_data == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid output data.",
+		 function );
+
+		return( -1 );
+	}
+	if( output_data_size > (size_t) SSIZE_MAX )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
+		 "%s: invalid output data size value exceeds maximum.",
+		 function );
+
+		return( -1 );
+	}
+	if( output_data_size < input_data_size )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid ouput data size smaller than input data size.",
+		 function );
+
+		return( -1 );
+	}
+	if( memory_copy(
+	     internal_initialization_vector,
+	     initialization_vector,
+	     16 ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+		 "%s: unable to copy initialization vector.",
+		 function );
+
+		goto on_error;
+	}
+	if( ( mode == LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT )
+	 && ( output_data != input_data ) )
+	{
+		if( memory_copy(
+		     output_data,
+		     input_data,
+		     input_data_size ) == NULL )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_MEMORY,
+			 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+			 "%s: unable to copy input data to output data.",
+			 function );
+
+			goto on_error;
+		}
+	}
+	while( data_offset <= ( input_data_size - 16 ) )
+	{
+		if( mode == LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT )
+		{
+#if defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 0 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 1 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 2 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 3 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 4 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 5 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 6 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 7 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 8 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 9 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 10 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 11 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 12 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 13 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 14 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 15 ];
+#else
+			for( block_index = 0;
+			     block_index < 16;
+			     block_index++ )
+			{
+				output_data[ data_offset++ ] ^= internal_initialization_vector[ block_index ];
+			}
+#endif
+			data_offset -= 16;
+
+			if( libfcrypto_internal_serpent_context_encrypt_block(
+			     (libfcrypto_internal_serpent_context_t *) context,
+			     &( input_data[ data_offset ] ),
+			     16,
+			     &( output_data[ data_offset ] ),
+			     16,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to encrypt input data.",
+				 function );
+
+				goto on_error;
+			}
+			if( memory_copy(
+			     internal_initialization_vector,
+			     &( output_data[ data_offset ] ),
+			     16 ) == NULL )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_MEMORY,
+				 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+				 "%s: unable to copy enrypted output data to initialization vector.",
+				 function );
+
+				goto on_error;
+			}
+		}
+		else
+		{
+			if( libfcrypto_internal_serpent_context_decrypt_block(
+			     (libfcrypto_internal_serpent_context_t *) context,
+			     &( input_data[ data_offset ] ),
+			     16,
+			     &( output_data[ data_offset ] ),
+			     16,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to decrypt input data.",
+				 function );
+
+				goto on_error;
+			}
+#if defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 0 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 1 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 2 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 3 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 4 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 5 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 6 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 7 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 8 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 9 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 10 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 11 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 12 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 13 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 14 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 15 ];
+#else
+			for( block_index = 0;
+			     block_index < 16;
+			     block_index++ )
+			{
+				output_data[ data_offset++ ] ^= internal_initialization_vector[ block_index ];
+			}
+#endif
+			data_offset -= 16;
+
+			if( memory_copy(
+			     internal_initialization_vector,
+			     &( input_data[ data_offset ] ),
+			     16 ) == NULL )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_MEMORY,
+				 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+				 "%s: unable to copy enrypted input data to initialization vector.",
+				 function );
+
+				goto on_error;
+			}
+		}
+		data_offset += 16;
+	}
+	if( memory_set(
+	     internal_initialization_vector,
+	     0,
+	     16 ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
+		 "%s: unable to clear initialization vector.",
+		 function );
+
+		goto on_error;
+	}
+	return( 1 );
+
+on_error:
+	memory_set(
+	 internal_initialization_vector,
+	 0,
+	 16 );
+
+	return( -1 );
+}
+
 /* De- or encrypts a block of data using Serpent-ECB (Electronic CodeBook)
  * The size must be a multitude of the Serpent block size (16 byte)
  * Returns 1 if successful or -1 on error
@@ -2363,8 +2694,7 @@ int libfcrypto_serpent_crypt_ecb(
      size_t output_data_size,
      libcerror_error_t **error )
 {
-	libfcrypto_internal_serpent_context_t *internal_context = NULL;
-	static char *function                                   = "libfcrypto_serpent_context_crypt_ecb";
+	static char *function = "libfcrypto_serpent_context_crypt_ecb";
 
 	if( context == NULL )
 	{
@@ -2377,8 +2707,6 @@ int libfcrypto_serpent_crypt_ecb(
 
 		return( -1 );
 	}
-	internal_context = (libfcrypto_internal_serpent_context_t *) context;
-
 	if( ( mode != LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT )
 	 && ( mode != LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT ) )
 	{
@@ -2394,7 +2722,7 @@ int libfcrypto_serpent_crypt_ecb(
 	if( mode == LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT )
 	{
 		if( libfcrypto_internal_serpent_context_encrypt_block(
-		     internal_context,
+		     (libfcrypto_internal_serpent_context_t *) context,
 		     input_data,
 		     input_data_size,
 		     output_data,
@@ -2414,7 +2742,7 @@ int libfcrypto_serpent_crypt_ecb(
 	else
 	{
 		if( libfcrypto_internal_serpent_context_decrypt_block(
-		     internal_context,
+		     (libfcrypto_internal_serpent_context_t *) context,
 		     input_data,
 		     input_data_size,
 		     output_data,

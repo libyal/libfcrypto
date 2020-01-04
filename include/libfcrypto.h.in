@@ -164,6 +164,22 @@ int libfcrypto_serpent_context_set_key(
      size_t key_bit_size,
      libfcrypto_error_t **error );
 
+/* De- or encrypts a block of data using Serpent-CBC (Cipher Block Chaining)
+ * The size must be a multitude of the Serpent block size (16 byte)
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_serpent_crypt_cbc(
+     libfcrypto_serpent_context_t *context,
+     int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
 /* De- or encrypts a block of data using Serpent-ECB (Electronic CodeBook)
  * The size must be a multitude of the Serpent block size (16 byte)
  * Returns 1 if successful or -1 on error

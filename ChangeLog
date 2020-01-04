@@ -1,3 +1,12 @@
+To do:
+* RC4 add libfcrypto_rc4_crypt_cbc functions
+* Add support for cast5
+* Add support for cast6
+* Add support for blowfish
+* Add support for Anubis
+* Add support for reversed Serpent
+* Add support for Twofish
+
 20170901
 * see `git log' for more recent change log
 * Created stand-alone version from libfguid and assorted code
