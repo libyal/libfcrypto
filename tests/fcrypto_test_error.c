@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #endif
 
-#include "fcrypto_test_libcerror.h"
 #include "fcrypto_test_libfcrypto.h"
 #include "fcrypto_test_macros.h"
 #include "fcrypto_test_unused.h"
