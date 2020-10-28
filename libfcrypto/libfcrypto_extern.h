@@ -30,7 +30,11 @@
 
 #include <libfcrypto/extern.h>
 
+#if defined( __CYGWIN__ )
+#define LIBFCRYPTO_EXTERN_VARIABLE	extern
+#else
 #define LIBFCRYPTO_EXTERN_VARIABLE	LIBFCRYPTO_EXTERN
+#endif
 
 #else
 #define LIBFCRYPTO_EXTERN		/* extern */
