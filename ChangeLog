@@ -1,5 +1,6 @@
 To do:
 * RC4 add libfcrypto_rc4_crypt_cbc functions
+* Add support for 3des
 * Add support for cast5
 * Add support for cast6
 * Add support for blowfish
