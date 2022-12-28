@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
  [libfcrypto],
- [20221010],
+ [20221228],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -60,6 +60,22 @@ AX_LIBCERROR_CHECK_ENABLE
 dnl Check if libfcrypto required headers and functions are available
 AX_LIBFCRYPTO_CHECK_LOCAL
 
+dnl Check if libfcrypto Python bindings (pyfcrypto) required headers and functions are available
+AX_PYTHON_CHECK_ENABLE
+
+AS_IF(
+  [test "x${ac_cv_enable_python}" != xno || test "x${ac_cv_enable_python2}" != xno || test "x${ac_cv_enable_python3}" != xno],
+  [dnl Headers included in pyfcrypto/pyfcrypto_error.c
+  AC_CHECK_HEADERS([stdarg.h varargs.h])
+
+  AS_IF(
+    [test "x$ac_cv_header_stdarg_h" != xyes && test "x$ac_cv_header_varargs_h" != xyes],
+    [AC_MSG_FAILURE(
+      [Missing headers: stdarg.h and varargs.h],
+      [1])
+    ])
+  ])
+
 dnl Check if DLL support is needed
 AX_LIBFCRYPTO_CHECK_DLL_SUPPORT
 
@@ -94,6 +110,9 @@ AC_CONFIG_FILES([include/Makefile])
 AC_CONFIG_FILES([common/Makefile])
 AC_CONFIG_FILES([libcerror/Makefile])
 AC_CONFIG_FILES([libfcrypto/Makefile])
+AC_CONFIG_FILES([pyfcrypto/Makefile])
+AC_CONFIG_FILES([pyfcrypto-python2/Makefile])
+AC_CONFIG_FILES([pyfcrypto-python3/Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
 AC_CONFIG_FILES([po/Makevars])
 AC_CONFIG_FILES([manuals/Makefile])
@@ -120,7 +139,9 @@ AC_OUTPUT
 dnl Print a summary
 AC_MSG_NOTICE([
 Building:
-   libcerror support: $ac_cv_libcerror
+   libcerror support:          $ac_cv_libcerror
 
+Features:
+   Python (pyfcrypto) support: $ac_cv_enable_python
 ]);
 

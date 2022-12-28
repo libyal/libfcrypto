@@ -5,6 +5,9 @@ SUBDIRS = \
 	common \
 	libcerror \
 	libfcrypto \
+	pyfcrypto \
+	pyfcrypto-python2 \
+	pyfcrypto-python3 \
 	po \
 	manuals \
 	tests \
@@ -29,6 +32,9 @@ GETTEXT_FILES = \
 PKGCONFIG_FILES = \
 	libfcrypto.pc.in
 
+SETUP_PY_FILES = \
+	setup.py
+
 SPEC_FILES = \
 	libfcrypto.spec \
 	libfcrypto.spec.in
@@ -37,6 +43,7 @@ EXTRA_DIST = \
 	$(DPKG_FILES) \
 	$(GETTEXT_FILES) \
 	$(PKGCONFIG_FILES) \
+	$(SETUP_PY_FILES) \
 	$(SPEC_FILES)
 
 MAINTAINERCLEANFILES = \

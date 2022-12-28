@@ -4,12 +4,21 @@ AM_CPPFLAGS = \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBFCRYPTO_DLL_IMPORT@
 
+if HAVE_PYTHON_TESTS
+TESTS_PYFCRYPTO = \
+	test_python_module.sh
+endif
+
 TESTS = \
-	test_library.sh
+	test_library.sh \
+	$(TESTS_PYFCRYPTO)
 
 check_SCRIPTS = \
+	pyfcrypto_test_rc4_context.py \
+	pyfcrypto_test_support.py \
 	test_library.sh \
 	test_manpage.sh \
+	test_python_module.sh \
 	test_runner.sh
 
 EXTRA_DIST = \

@@ -5,6 +5,7 @@ MSVSCPP_FILES = \
 	fcrypto_test_support/fcrypto_test_support.vcproj \
 	libcerror/libcerror.vcproj \
 	libfcrypto/libfcrypto.vcproj \
+	pyfcrypto/pyfcrypto.vcproj \
 	libfcrypto.sln
 
 EXTRA_DIST = \
