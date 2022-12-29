@@ -1,5 +1,5 @@
 /*
- * Python definition of the libfcrypto crypt functions
+ * Python object wrapper of libfcrypto_des3_context_t
  *
  * Copyright (C) 2017-2022, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _PYFCRYPTO_CRYPT_H )
-#define _PYFCRYPTO_CRYPT_H
+#if !defined( _PYFCRYPTO_DES3_CONTEXT_H )
+#define _PYFCRYPTO_DES3_CONTEXT_H
 
 #include <common.h>
 #include <types.h>
@@ -32,13 +32,33 @@
 extern "C" {
 #endif
 
-PyObject *pyfcrypto_crypt_des3(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+typedef struct pyfcrypto_des3_context pyfcrypto_des3_context_t;
 
-PyObject *pyfcrypto_crypt_rc4(
-           PyObject *self,
+struct pyfcrypto_des3_context
+{
+	/* Python object initialization
+	 */
+	PyObject_HEAD
+
+	/* The libfcrypto des3 context
+	 */
+	libfcrypto_des3_context_t *des3_context;
+};
+
+extern PyMethodDef pyfcrypto_des3_context_object_methods[];
+extern PyTypeObject pyfcrypto_des3_context_type_object;
+
+PyObject *pyfcrypto_des3_context_new(
+           void );
+
+int pyfcrypto_des3_context_init(
+     pyfcrypto_des3_context_t *pyfcrypto_des3_context );
+
+void pyfcrypto_des3_context_free(
+      pyfcrypto_des3_context_t *pyfcrypto_des3_context );
+
+PyObject *pyfcrypto_des3_context_set_key(
+           pyfcrypto_des3_context_t *pyfcrypto_des3_context,
            PyObject *arguments,
            PyObject *keywords );
 
@@ -46,5 +66,5 @@ PyObject *pyfcrypto_crypt_rc4(
 }
 #endif
 
-#endif /* !defined( _PYFCRYPTO_CRYPT_H ) */
+#endif /* !defined( _PYFCRYPTO_DES3_CONTEXT_H ) */
 

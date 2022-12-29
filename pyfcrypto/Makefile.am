@@ -10,6 +10,8 @@ pyexec_LTLIBRARIES = pyfcrypto.la
 pyfcrypto_la_SOURCES = \
 	pyfcrypto.c pyfcrypto.h \
 	pyfcrypto_crypt.c pyfcrypto_crypt.h \
+	pyfcrypto_crypt_modes.c pyfcrypto_crypt_modes.h \
+	pyfcrypto_des3_context.c pyfcrypto_des3_context.h \
 	pyfcrypto_error.c pyfcrypto_error.h \
 	pyfcrypto_libcerror.h \
 	pyfcrypto_libfcrypto.h \

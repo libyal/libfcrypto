@@ -377,7 +377,7 @@ int fcrypto_test_rc4_context_set_key(
 	 "error",
 	 error );
 
-	/* Test set key
+	/* Test regular case
 	 */
 	result = libfcrypto_rc4_context_set_key(
 	          rc4_context,

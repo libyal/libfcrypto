@@ -125,6 +125,7 @@ stamp-h[1-9]
 /libfcrypto/libfcrypto_definitions.h
 /pyfcrypto-python[23]/*.[ch]
 /tests/*.exe
+/tests/fcrypto_test_des3_context
 /tests/fcrypto_test_error
 /tests/fcrypto_test_rc4_context
 /tests/fcrypto_test_serpent_context

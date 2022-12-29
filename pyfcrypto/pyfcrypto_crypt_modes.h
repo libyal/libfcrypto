@@ -1,7 +1,7 @@
 /*
- * Python definition of the libfcrypto crypt functions
+ * Python object definition of the libfcrypto crypt modes
  *
- * Copyright (C) 2017-2022, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2011-2022, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _PYFCRYPTO_CRYPT_H )
-#define _PYFCRYPTO_CRYPT_H
+#if !defined( _PYFCRYPTO_CRYPT_MODES_H )
+#define _PYFCRYPTO_CRYPT_MODES_H
 
 #include <common.h>
 #include <types.h>
@@ -32,19 +32,32 @@
 extern "C" {
 #endif
 
-PyObject *pyfcrypto_crypt_des3(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+typedef struct pyfcrypto_crypt_modes pyfcrypto_crypt_modes_t;
 
-PyObject *pyfcrypto_crypt_rc4(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+struct pyfcrypto_crypt_modes
+{
+	/* Python object initialization
+	 */
+	PyObject_HEAD
+};
+
+extern PyTypeObject pyfcrypto_crypt_modes_type_object;
+
+int pyfcrypto_crypt_modes_init_type(
+     PyTypeObject *type_object );
+
+PyObject *pyfcrypto_crypt_modes_new(
+           void );
+
+int pyfcrypto_crypt_modes_init(
+     pyfcrypto_crypt_modes_t *definitions_object );
+
+void pyfcrypto_crypt_modes_free(
+      pyfcrypto_crypt_modes_t *definitions_object );
 
 #if defined( __cplusplus )
 }
 #endif
 
-#endif /* !defined( _PYFCRYPTO_CRYPT_H ) */
+#endif /* !defined( _PYFCRYPTO_CRYPT_MODES_H ) */
 

@@ -91,6 +91,50 @@ int libfcrypto_error_backtrace_sprint(
      size_t size );
 
 /* -------------------------------------------------------------------------
+ * DES3 context functions
+ * ------------------------------------------------------------------------- */
+
+/* Creates a DES3 context
+ * Make sure the value context is referencing, is set to NULL
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_des3_context_initialize(
+     libfcrypto_des3_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Frees a DES3 context
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_des3_context_free(
+     libfcrypto_des3_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Sets the key
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_des3_context_set_key(
+     libfcrypto_des3_context_t *context,
+     const uint8_t *key,
+     size_t key_bit_size,
+     libfcrypto_error_t **error );
+
+/* De- or encrypts a buffer of data using DES3
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_des3_crypt(
+     libfcrypto_des3_context_t *context,
+     int mode,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
+/* -------------------------------------------------------------------------
  * RC4 context functions
  * ------------------------------------------------------------------------- */
 

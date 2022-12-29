@@ -28,6 +28,9 @@
 #endif
 
 #include "pyfcrypto.h"
+#include "pyfcrypto_des3_context.h"
+#include "pyfcrypto_crypt.h"
+#include "pyfcrypto_crypt_modes.h"
 #include "pyfcrypto_error.h"
 #include "pyfcrypto_libcerror.h"
 #include "pyfcrypto_libfcrypto.h"
@@ -44,6 +47,20 @@ PyMethodDef pyfcrypto_module_methods[] = {
 	  "get_version() -> String\n"
 	  "\n"
 	  "Retrieves the version." },
+
+	{ "crypt_des3",
+	  (PyCFunction) pyfcrypto_crypt_des3,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_des3(context, mode, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using 3DES." },
+
+	{ "crypt_rc4",
+	  (PyCFunction) pyfcrypto_crypt_rc4,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_rc4(context, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using RC4." },
 
 	/* Sentinel */
 	{ NULL, NULL, 0, NULL }
@@ -155,6 +172,45 @@ PyMODINIT_FUNC initpyfcrypto(
 	PyEval_InitThreads();
 #endif
 	gil_state = PyGILState_Ensure();
+
+	/* Setup the crypt modes type object
+	 */
+	pyfcrypto_crypt_modes_type_object.tp_new = PyType_GenericNew;
+
+	if( pyfcrypto_crypt_modes_init_type(
+	     &pyfcrypto_crypt_modes_type_object ) != 1 )
+	{
+		goto on_error;
+	}
+	if( PyType_Ready(
+	     &pyfcrypto_crypt_modes_type_object ) < 0 )
+	{
+		goto on_error;
+	}
+	Py_IncRef(
+	 (PyObject *) &pyfcrypto_crypt_modes_type_object );
+
+	PyModule_AddObject(
+	 module,
+	 "crypt_modes",
+	 (PyObject *) &pyfcrypto_crypt_modes_type_object );
+
+	/* Setup the DES3 context type object
+	 */
+	pyfcrypto_des3_context_type_object.tp_new = PyType_GenericNew;
+
+	if( PyType_Ready(
+	     &pyfcrypto_des3_context_type_object ) < 0 )
+	{
+		goto on_error;
+	}
+	Py_IncRef(
+	 (PyObject *) &pyfcrypto_des3_context_type_object );
+
+	PyModule_AddObject(
+	 module,
+	 "des3_context",
+	 (PyObject *) &pyfcrypto_des3_context_type_object );
 
 	/* Setup the RC4 context type object
 	 */

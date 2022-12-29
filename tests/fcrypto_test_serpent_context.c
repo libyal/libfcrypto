@@ -45,9 +45,9 @@ int fcrypto_test_serpent_context_initialize(
 	int result                                    = 0;
 
 #if defined( HAVE_FCRYPTO_TEST_MEMORY )
-	int number_of_malloc_fail_tests       = 1;
-	int number_of_memset_fail_tests       = 1;
-	int test_number                       = 0;
+	int number_of_malloc_fail_tests               = 1;
+	int number_of_memset_fail_tests               = 1;
+	int test_number                               = 0;
 #endif
 
 	/* Test regular cases
@@ -378,7 +378,7 @@ int fcrypto_test_serpent_context_set_key(
 	 "error",
 	 error );
 
-	/* Test set key
+	/* Test regular case
 	 */
 	result = libfcrypto_serpent_context_set_key(
 	          serpent_context,

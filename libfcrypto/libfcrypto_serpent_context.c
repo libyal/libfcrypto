@@ -1515,24 +1515,14 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 
 		return( -1 );
 	}
-	if( input_data_size < 16 )
+	if( ( input_data_size < 16 )
+	 || ( input_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
-		 "%s: invalid input data size value too small.",
-		 function );
-
-		return( -1 );
-	}
-	if( input_data_size > (size_t) SSIZE_MAX )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid input data size value exceeds maximum.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid input data size value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -1548,24 +1538,14 @@ int libfcrypto_internal_serpent_context_encrypt_block(
 
 		return( -1 );
 	}
-	if( output_data_size < 16 )
+	if( ( output_data_size < 16 )
+	 || ( output_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
-		 "%s: invalid output data size value too small.",
-		 function );
-
-		return( -1 );
-	}
-	if( output_data_size > (size_t) SSIZE_MAX )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid output data size value exceeds maximum.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid output data size value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -1953,24 +1933,14 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 
 		return( -1 );
 	}
-	if( input_data_size < 16 )
+	if( ( input_data_size < 16 )
+	 || ( input_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
-		 "%s: invalid input data size value too small.",
-		 function );
-
-		return( -1 );
-	}
-	if( input_data_size > (size_t) SSIZE_MAX )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid input data size value exceeds maximum.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid input data size value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -1986,24 +1956,14 @@ int libfcrypto_internal_serpent_context_decrypt_block(
 
 		return( -1 );
 	}
-	if( output_data_size < 16 )
+	if( ( output_data_size < 16 )
+	 || ( output_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
-		 "%s: invalid output data size value too small.",
-		 function );
-
-		return( -1 );
-	}
-	if( output_data_size > (size_t) SSIZE_MAX )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid output data size value exceeds maximum.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid output data size value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -2430,24 +2390,14 @@ int libfcrypto_serpent_crypt_cbc(
 
 		return( -1 );
 	}
-	if( input_data_size > (size_t) SSIZE_MAX )
+	if( ( input_data_size < 16 )
+	 || ( input_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid input data size value exceeds maximum.",
-		 function );
-
-		return( -1 );
-	}
-	if( input_data_size < 16 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_TOO_SMALL,
-		 "%s: invalid input data size value too small.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid input data size value out of bounds.",
 		 function );
 
 		return( -1 );

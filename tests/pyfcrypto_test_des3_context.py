@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Python-bindings rc4_context type test script
+# Python-bindings des3_context type test script
 #
 # Copyright (C) 2017-2022, Joachim Metz <joachim.metz@gmail.com>
 #
@@ -27,13 +27,13 @@ import unittest
 import pyfcrypto
 
 
-class Rc4ContextTypeTests(unittest.TestCase):
-  """Tests the rc4_context type."""
+class Des3ContextTypeTests(unittest.TestCase):
+  """Tests the des3_context type."""
 
   def test_initialize(self):
     """Tests the __init__ function."""
-    rc4_context = pyfcrypto.rc4_context()
-    self.assertIsNotNone(rc4_context)
+    des3_context = pyfcrypto.des3_context()
+    self.assertIsNotNone(des3_context)
 
 
 if __name__ == "__main__":
