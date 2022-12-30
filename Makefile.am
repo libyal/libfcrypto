@@ -23,6 +23,7 @@ DPKG_FILES = \
 	dpkg/rules \
 	dpkg/libfcrypto-dev.install \
 	dpkg/libfcrypto.install \
+	dpkg/libfcrypto-python3.install \
 	dpkg/source/format
 
 GETTEXT_FILES = \
