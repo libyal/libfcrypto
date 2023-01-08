@@ -1,7 +1,7 @@
 /*
  * The error code definitions for libfcrypto
  *
- * Copyright (C) 2017-2022, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017-2023, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
