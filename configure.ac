@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
  [libfcrypto],
- [20230704],
+ [20230929],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -131,6 +131,7 @@ AC_CONFIG_FILES([dpkg/changelog])
 AC_CONFIG_FILES([libfcrypto/libfcrypto.rc])
 AC_CONFIG_FILES([libfcrypto.pc])
 AC_CONFIG_FILES([libfcrypto.spec])
+AC_CONFIG_FILES([setup.cfg])
 dnl Generate a source configuration file
 AC_CONFIG_HEADERS([common/config.h])
 
