@@ -37,9 +37,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f Makefile
+	-rm -f Makefile
 
-splint:
+splint-local:
 	@echo "Running splint on crypt_rc4_fuzzer ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(crypt_rc4_fuzzer_SOURCES)
 	@echo "Running splint on crypt_serpent_cbc_fuzzer ..."

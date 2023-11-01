@@ -33,11 +33,13 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libfcrypto_definitions.h
-	/bin/rm -f libfcrypto.rc
-	/bin/rm -f Makefile
+	-rm -f libfcrypto_definitions.h
+	-rm -f libfcrypto.rc
+	-rm -f Makefile
 
-splint:
+sources-local: $(BUILT_SOURCES)
+
+splint-local:
 	@echo "Running splint on libfcrypto ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(libfcrypto_la_SOURCES)
 

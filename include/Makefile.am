@@ -18,9 +18,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libfcrypto.h
-	/bin/rm -f libfcrypto/definitions.h
-	/bin/rm -f libfcrypto/features.h
-	/bin/rm -f libfcrypto/types.h
-	/bin/rm -f Makefile
+	-rm -f libfcrypto.h
+	-rm -f libfcrypto/definitions.h
+	-rm -f libfcrypto/features.h
+	-rm -f libfcrypto/types.h
+	-rm -f Makefile
 
