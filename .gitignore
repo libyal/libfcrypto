@@ -1,6 +1,6 @@
 # Files to ignore by git
 #
-# Version: 20230926
+# Version: 20231119
 
 # Generic auto-generated build files
 *~
@@ -127,7 +127,6 @@ stamp-h[1-9]
 /libfcrypto.spec
 /libfcrypto/libfcrypto.rc
 /libfcrypto/libfcrypto_definitions.h
-/pyfcrypto-python[23]/*.[ch]
 /setup.cfg
 /tests/*.exe
 /tests/fcrypto_test_des3_context

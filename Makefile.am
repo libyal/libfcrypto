@@ -6,8 +6,6 @@ SUBDIRS = \
 	libcerror \
 	libfcrypto \
 	pyfcrypto \
-	pyfcrypto-python2 \
-	pyfcrypto-python3 \
 	po \
 	manuals \
 	tests \

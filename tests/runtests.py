@@ -10,7 +10,7 @@ import sys
 import unittest
 
 
-test_profile = "..pyfcrypto"
+test_profile = ".pyfcrypto"
 input_glob = "*"
 option_sets = []
 
