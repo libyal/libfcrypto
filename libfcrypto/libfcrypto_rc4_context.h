@@ -1,7 +1,7 @@
 /*
  * RC4 (de/en)crypt functions
  *
- * Copyright (C) 2017-2023, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2017-2024, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
