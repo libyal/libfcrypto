@@ -9,6 +9,7 @@ pyexec_LTLIBRARIES = pyfcrypto.la
 
 pyfcrypto_la_SOURCES = \
 	pyfcrypto.c pyfcrypto.h \
+	pyfcrypto_blowfish_context.c pyfcrypto_blowfish_context.h \
 	pyfcrypto_crypt.c pyfcrypto_crypt.h \
 	pyfcrypto_crypt_modes.c pyfcrypto_crypt_modes.h \
 	pyfcrypto_des3_context.c pyfcrypto_des3_context.h \
@@ -17,6 +18,7 @@ pyfcrypto_la_SOURCES = \
 	pyfcrypto_libfcrypto.h \
 	pyfcrypto_python.h \
 	pyfcrypto_rc4_context.c pyfcrypto_rc4_context.h \
+	pyfcrypto_serpent_context.c pyfcrypto_serpent_context.h \
 	pyfcrypto_unused.h
 
 pyfcrypto_la_LIBADD = \

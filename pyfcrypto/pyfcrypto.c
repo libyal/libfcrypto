@@ -28,6 +28,7 @@
 #endif
 
 #include "pyfcrypto.h"
+#include "pyfcrypto_blowfish_context.h"
 #include "pyfcrypto_des3_context.h"
 #include "pyfcrypto_crypt.h"
 #include "pyfcrypto_crypt_modes.h"
@@ -36,6 +37,7 @@
 #include "pyfcrypto_libfcrypto.h"
 #include "pyfcrypto_python.h"
 #include "pyfcrypto_rc4_context.h"
+#include "pyfcrypto_serpent_context.h"
 #include "pyfcrypto_unused.h"
 
 /* The pyfcrypto module methods
@@ -47,6 +49,20 @@ PyMethodDef pyfcrypto_module_methods[] = {
 	  "get_version() -> String\n"
 	  "\n"
 	  "Retrieves the version." },
+
+	{ "crypt_blowfish_cbc",
+	  (PyCFunction) pyfcrypto_crypt_blowfish_cbc,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_blowfish_cbc(context, mode, initialization_vector, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using Blowfish-CBC." },
+
+	{ "crypt_blowfish_ecb",
+	  (PyCFunction) pyfcrypto_crypt_blowfish_ecb,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_blowfish_ecb(context, mode, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using Blowfish-ECB." },
 
 	{ "crypt_des3",
 	  (PyCFunction) pyfcrypto_crypt_des3,
@@ -61,6 +77,13 @@ PyMethodDef pyfcrypto_module_methods[] = {
 	  "crypt_rc4(context, data) -> Bytes\n"
 	  "\n"
 	  "De- or encrypts a block of data using RC4." },
+
+	{ "crypt_serpent_ecb",
+	  (PyCFunction) pyfcrypto_crypt_serpent_ecb,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_serpent_ecb(context, mode, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using Serpent-ECB." },
 
 	/* Sentinel */
 	{ NULL, NULL, 0, NULL }
@@ -194,6 +217,23 @@ PyMODINIT_FUNC initpyfcrypto(
 	 "crypt_modes",
 	 (PyObject *) &pyfcrypto_crypt_modes_type_object );
 
+	/* Setup the Blowfish context type object
+	 */
+	pyfcrypto_blowfish_context_type_object.tp_new = PyType_GenericNew;
+
+	if( PyType_Ready(
+	     &pyfcrypto_blowfish_context_type_object ) < 0 )
+	{
+		goto on_error;
+	}
+	Py_IncRef(
+	 (PyObject *) &pyfcrypto_blowfish_context_type_object );
+
+	PyModule_AddObject(
+	 module,
+	 "blowfish_context",
+	 (PyObject *) &pyfcrypto_blowfish_context_type_object );
+
 	/* Setup the DES3 context type object
 	 */
 	pyfcrypto_des3_context_type_object.tp_new = PyType_GenericNew;
@@ -227,6 +267,23 @@ PyMODINIT_FUNC initpyfcrypto(
 	 module,
 	 "rc4_context",
 	 (PyObject *) &pyfcrypto_rc4_context_type_object );
+
+	/* Setup the Serpent context type object
+	 */
+	pyfcrypto_serpent_context_type_object.tp_new = PyType_GenericNew;
+
+	if( PyType_Ready(
+	     &pyfcrypto_serpent_context_type_object ) < 0 )
+	{
+		goto on_error;
+	}
+	Py_IncRef(
+	 (PyObject *) &pyfcrypto_serpent_context_type_object );
+
+	PyModule_AddObject(
+	 module,
+	 "serpent_context",
+	 (PyObject *) &pyfcrypto_serpent_context_type_object );
 
 	PyGILState_Release(
 	 gil_state );

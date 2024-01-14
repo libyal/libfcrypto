@@ -1,4 +1,4 @@
-.Dd December 29, 2022
+.Dd January 14, 2024
 .Dt libfcrypto 3
 .Os libfcrypto
 .Sh NAME
@@ -22,6 +22,19 @@ Error functions
 .Fn libfcrypto_error_backtrace_fprint "libfcrypto_error_t *error" "FILE *stream"
 .Ft int
 .Fn libfcrypto_error_backtrace_sprint "libfcrypto_error_t *error" "char *string" "size_t size"
+.Pp
+Blowfish context functions
+.Ft int
+.Fn libfcrypto_blowfish_context_initialize "libfcrypto_blowfish_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_blowfish_context_free "libfcrypto_blowfish_context_t **context" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_blowfish_context_set_key "libfcrypto_blowfish_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_blowfish_crypt_cbc "libfcrypto_blowfish_context_t *context" "int mode" "const uint8_t *initialization_vector" "size_t initialization_vector_size" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_blowfish_crypt_ecb "libfcrypto_blowfish_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Sh DESCRIPTION
 .Pp
 DES3 context functions
 .Ft int

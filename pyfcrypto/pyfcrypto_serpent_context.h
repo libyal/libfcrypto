@@ -1,5 +1,5 @@
 /*
- * Python definition of the libfcrypto crypt functions
+ * Python object wrapper of libfcrypto_serpent_context_t
  *
  * Copyright (C) 2017-2024, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _PYFCRYPTO_CRYPT_H )
-#define _PYFCRYPTO_CRYPT_H
+#if !defined( _PYFCRYPTO_SERPENT_CONTEXT_H )
+#define _PYFCRYPTO_SERPENT_CONTEXT_H
 
 #include <common.h>
 #include <types.h>
@@ -32,28 +32,33 @@
 extern "C" {
 #endif
 
-PyObject *pyfcrypto_crypt_blowfish_cbc(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+typedef struct pyfcrypto_serpent_context pyfcrypto_serpent_context_t;
 
-PyObject *pyfcrypto_crypt_blowfish_ecb(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+struct pyfcrypto_serpent_context
+{
+	/* Python object initialization
+	 */
+	PyObject_HEAD
 
-PyObject *pyfcrypto_crypt_des3(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+	/* The libfcrypto Serpent context
+	 */
+	libfcrypto_serpent_context_t *serpent_context;
+};
 
-PyObject *pyfcrypto_crypt_rc4(
-           PyObject *self,
-           PyObject *arguments,
-           PyObject *keywords );
+extern PyMethodDef pyfcrypto_serpent_context_object_methods[];
+extern PyTypeObject pyfcrypto_serpent_context_type_object;
 
-PyObject *pyfcrypto_crypt_serpent_ecb(
-           PyObject *self,
+PyObject *pyfcrypto_serpent_context_new(
+           void );
+
+int pyfcrypto_serpent_context_init(
+     pyfcrypto_serpent_context_t *pyfcrypto_serpent_context );
+
+void pyfcrypto_serpent_context_free(
+      pyfcrypto_serpent_context_t *pyfcrypto_serpent_context );
+
+PyObject *pyfcrypto_serpent_context_set_key(
+           pyfcrypto_serpent_context_t *pyfcrypto_serpent_context,
            PyObject *arguments,
            PyObject *keywords );
 
@@ -61,5 +66,5 @@ PyObject *pyfcrypto_crypt_serpent_ecb(
 }
 #endif
 
-#endif /* !defined( _PYFCRYPTO_CRYPT_H ) */
+#endif /* !defined( _PYFCRYPTO_SERPENT_CONTEXT_H ) */
 

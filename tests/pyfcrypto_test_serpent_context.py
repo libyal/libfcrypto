@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Python-bindings des3_context type test script
+# Python-bindings serpent_context type test script
 #
 # Copyright (C) 2017-2024, Joachim Metz <joachim.metz@gmail.com>
 #
@@ -27,21 +27,21 @@ import unittest
 import pyfcrypto
 
 
-class Des3ContextTypeTests(unittest.TestCase):
-  """Tests the des3_context type."""
+class BlowfishContextTypeTests(unittest.TestCase):
+  """Tests the serpent_context type."""
 
   def test_initialize(self):
     """Tests the __init__ function."""
-    des3_context = pyfcrypto.des3_context()
-    self.assertIsNotNone(des3_context)
+    serpent_context = pyfcrypto.serpent_context()
+    self.assertIsNotNone(serpent_context)
 
   def test_set_key(self):
     """Tests the set_key function."""
-    des3_context = pyfcrypto.des3_context()
-    des3_context.set_key(b'0123456')
+    serpent_context = pyfcrypto.serpent_context()
+    serpent_context.set_key(b'0123456789abcdef')
 
     with self.assertRaises(ValueError):
-      des3_context.set_key(None)
+      serpent_context.set_key(None)
 
 
 if __name__ == "__main__":

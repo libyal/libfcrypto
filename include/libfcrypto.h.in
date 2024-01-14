@@ -91,6 +91,67 @@ int libfcrypto_error_backtrace_sprint(
      size_t size );
 
 /* -------------------------------------------------------------------------
+ * Blowfish context functions
+ * ------------------------------------------------------------------------- */
+
+/* Creates a Blowfish context
+ * Make sure the value context is referencing, is set to NULL
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_blowfish_context_initialize(
+     libfcrypto_blowfish_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Frees a Blowfish context
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_blowfish_context_free(
+     libfcrypto_blowfish_context_t **context,
+     libfcrypto_error_t **error );
+
+/* Sets the key
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_blowfish_context_set_key(
+     libfcrypto_blowfish_context_t *context,
+     const uint8_t *key,
+     size_t key_bit_size,
+     libfcrypto_error_t **error );
+
+/* De- or encrypts a block of data using Blowfish-CBC (Cipher Block Chaining)
+ * The size must be a multitude of the Blowfish block size (8 byte)
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_blowfish_crypt_cbc(
+     libfcrypto_blowfish_context_t *context,
+     int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
+/* De- or encrypts a block of data using Blowfish-ECB (Electronic CodeBook)
+ * The size must be a multitude of the Blowfish block size (8 byte)
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_EXTERN \
+int libfcrypto_blowfish_crypt_ecb(
+     libfcrypto_blowfish_context_t *context,
+     int mode,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
+/* -------------------------------------------------------------------------
  * DES3 context functions
  * ------------------------------------------------------------------------- */
 

@@ -371,7 +371,7 @@ PyObject *pyfcrypto_rc4_context_set_key(
 	{
 		pyfcrypto_error_raise(
 		 error,
-		 PyExc_IOError,
+		 PyExc_ValueError,
 		 "%s: unable to set key.",
 		 function );
 

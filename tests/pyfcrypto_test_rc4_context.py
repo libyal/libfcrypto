@@ -35,6 +35,14 @@ class Rc4ContextTypeTests(unittest.TestCase):
     rc4_context = pyfcrypto.rc4_context()
     self.assertIsNotNone(rc4_context)
 
+  def test_set_key(self):
+    """Tests the set_key function."""
+    rc4_context = pyfcrypto.rc4_context()
+    rc4_context.set_key(b'01234')
+
+    with self.assertRaises(ValueError):
+      rc4_context.set_key(None)
+
 
 if __name__ == "__main__":
   argument_parser = argparse.ArgumentParser()

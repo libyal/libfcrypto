@@ -496,8 +496,8 @@ int fcrypto_test_serpent_crypt_ecb(
 	uint8_t key[ 16 ] = {
 		0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-	uint8_t input_data[ 48 ];
-	uint8_t output_data[ 48 ];
+	uint8_t input_data[ 16 ];
+	uint8_t output_data[ 16 ];
 
 	libcerror_error_t *error                      = NULL;
 	libfcrypto_serpent_context_t *serpent_context = NULL;
@@ -543,9 +543,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
 	          input_data,
-	          48,
+	          16,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -563,9 +563,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT,
 	          input_data,
-	          48,
+	          16,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -583,9 +583,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          NULL,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
 	          input_data,
-	          48,
+	          16,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -604,9 +604,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          -1,
 	          input_data,
-	          48,
+	          16,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -625,9 +625,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
 	          NULL,
-	          48,
+	          16,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -648,7 +648,7 @@ int fcrypto_test_serpent_crypt_ecb(
 	          input_data,
 	          (size_t) SSIZE_MAX + 1,
 	          output_data,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -667,9 +667,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
 	          input_data,
-	          48,
+	          16,
 	          NULL,
-	          48,
+	          16,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -688,30 +688,9 @@ int fcrypto_test_serpent_crypt_ecb(
 	          serpent_context,
 	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
 	          input_data,
-	          48,
+	          16,
 	          output_data,
 	          (size_t) SSIZE_MAX + 1,
-	          &error );
-
-	FCRYPTO_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 -1 );
-
-	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
-	 "error",
-	 error );
-
-	libcerror_error_free(
-	 &error );
-
-	result = libfcrypto_serpent_crypt_ecb(
-	          serpent_context,
-	          LIBFCRYPTO_SERPENT_CRYPT_MODE_DECRYPT,
-	          input_data,
-	          48,
-	          output_data,
-	          32,
 	          &error );
 
 	FCRYPTO_TEST_ASSERT_EQUAL_INT(
@@ -1042,6 +1021,12 @@ int main(
 	FCRYPTO_TEST_RUN(
 	 "libfcrypto_serpent_context_set_key",
 	 fcrypto_test_serpent_context_set_key );
+
+	/* TODO add tests for libfcrypto_internal_serpent_context_encrypt_block */
+
+	/* TODO add tests for libfcrypto_internal_serpent_context_decrypt_block */
+
+	/* TODO add tests for libfcrypto_serpent_crypt_cbc */
 
 	FCRYPTO_TEST_RUN(
 	 "libfcrypto_serpent_crypt_ecb",

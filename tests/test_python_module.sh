@@ -7,7 +7,7 @@ EXIT_SUCCESS=0;
 EXIT_FAILURE=1;
 EXIT_IGNORE=77;
 
-TEST_FUNCTIONS="des3_context rc4_context support";
+TEST_FUNCTIONS="blowfish_context des3_context rc4_context serpent_context support";
 TEST_FUNCTIONS_WITH_INPUT="";
 OPTION_SETS=();
 

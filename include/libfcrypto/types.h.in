@@ -201,6 +201,7 @@ typedef int64_t off64_t;
 
 /* The following type definitions hide internal data structures
  */
+typedef intptr_t libfcrypto_blowfish_context_t;
 typedef intptr_t libfcrypto_des3_context_t;
 typedef intptr_t libfcrypto_rc4_context_t;
 typedef intptr_t libfcrypto_serpent_context_t;

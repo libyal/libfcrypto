@@ -1,5 +1,5 @@
 /*
- * Python object wrapper of libfcrypto_des3_context_t
+ * Python object wrapper of libfcrypto_serpent_context_t
  *
  * Copyright (C) 2017-2024, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -30,13 +30,13 @@
 #include "pyfcrypto_libfcrypto.h"
 #include "pyfcrypto_libcerror.h"
 #include "pyfcrypto_python.h"
-#include "pyfcrypto_des3_context.h"
+#include "pyfcrypto_serpent_context.h"
 #include "pyfcrypto_unused.h"
 
-PyMethodDef pyfcrypto_des3_context_object_methods[] = {
+PyMethodDef pyfcrypto_serpent_context_object_methods[] = {
 
 	{ "set_key",
-	  (PyCFunction) pyfcrypto_des3_context_set_key,
+	  (PyCFunction) pyfcrypto_serpent_context_set_key,
 	  METH_VARARGS | METH_KEYWORDS,
 	  "set_key(key) -> None\n"
 	  "\n"
@@ -46,23 +46,23 @@ PyMethodDef pyfcrypto_des3_context_object_methods[] = {
 	{ NULL, NULL, 0, NULL }
 };
 
-PyGetSetDef pyfcrypto_des3_context_object_get_set_definitions[] = {
+PyGetSetDef pyfcrypto_serpent_context_object_get_set_definitions[] = {
 
 	/* Sentinel */
 	{ NULL, NULL, NULL, NULL, NULL }
 };
 
-PyTypeObject pyfcrypto_des3_context_type_object = {
+PyTypeObject pyfcrypto_serpent_context_type_object = {
 	PyVarObject_HEAD_INIT( NULL, 0 )
 
 	/* tp_name */
-	"pyfcrypto.des3_context",
+	"pyfcrypto.serpent_context",
 	/* tp_basicsize */
-	sizeof( pyfcrypto_des3_context_t ),
+	sizeof( pyfcrypto_serpent_context_t ),
 	/* tp_itemsize */
 	0,
 	/* tp_dealloc */
-	(destructor) pyfcrypto_des3_context_free,
+	(destructor) pyfcrypto_serpent_context_free,
 	/* tp_print */
 	0,
 	/* tp_getattr */
@@ -94,7 +94,7 @@ PyTypeObject pyfcrypto_des3_context_type_object = {
 	/* tp_flags */
 	Py_TPFLAGS_DEFAULT,
 	/* tp_doc */
-	"pyfcrypto des3 context object (wraps libfcrypto_des3_context_t)",
+	"pyfcrypto Serpent context object (wraps libfcrypto_serpent_context_t)",
 	/* tp_traverse */
 	0,
 	/* tp_clear */
@@ -108,11 +108,11 @@ PyTypeObject pyfcrypto_des3_context_type_object = {
 	/* tp_iternext */
 	0,
 	/* tp_methods */
-	pyfcrypto_des3_context_object_methods,
+	pyfcrypto_serpent_context_object_methods,
 	/* tp_members */
 	0,
 	/* tp_getset */
-	pyfcrypto_des3_context_object_get_set_definitions,
+	pyfcrypto_serpent_context_object_get_set_definitions,
 	/* tp_base */
 	0,
 	/* tp_dict */
@@ -124,7 +124,7 @@ PyTypeObject pyfcrypto_des3_context_type_object = {
 	/* tp_dictoffset */
 	0,
 	/* tp_init */
-	(initproc) pyfcrypto_des3_context_init,
+	(initproc) pyfcrypto_serpent_context_init,
 	/* tp_alloc */
 	0,
 	/* tp_new */
@@ -147,77 +147,77 @@ PyTypeObject pyfcrypto_des3_context_type_object = {
 	0
 };
 
-/* Creates a new des3 context object
+/* Creates a new Serpent context object
  * Returns a Python object if successful or NULL on error
  */
-PyObject *pyfcrypto_des3_context_new(
+PyObject *pyfcrypto_serpent_context_new(
            void )
 {
-	pyfcrypto_des3_context_t *pyfcrypto_des3_context = NULL;
-	static char *function                            = "pyfcrypto_des3_context_new";
+	pyfcrypto_serpent_context_t *pyfcrypto_serpent_context = NULL;
+	static char *function                          = "pyfcrypto_serpent_context_new";
 
-	pyfcrypto_des3_context = PyObject_New(
-	                          struct pyfcrypto_des3_context,
-	                          &pyfcrypto_des3_context_type_object );
+	pyfcrypto_serpent_context = PyObject_New(
+	                          struct pyfcrypto_serpent_context,
+	                          &pyfcrypto_serpent_context_type_object );
 
-	if( pyfcrypto_des3_context == NULL )
+	if( pyfcrypto_serpent_context == NULL )
 	{
 		PyErr_Format(
 		 PyExc_MemoryError,
-		 "%s: unable to initialize des3 context.",
+		 "%s: unable to initialize Serpent context.",
 		 function );
 
 		goto on_error;
 	}
-	if( pyfcrypto_des3_context_init(
-	     pyfcrypto_des3_context ) != 0 )
+	if( pyfcrypto_serpent_context_init(
+	     pyfcrypto_serpent_context ) != 0 )
 	{
 		PyErr_Format(
 		 PyExc_MemoryError,
-		 "%s: unable to initialize des3 context.",
+		 "%s: unable to initialize Serpent context.",
 		 function );
 
 		goto on_error;
 	}
-	return( (PyObject *) pyfcrypto_des3_context );
+	return( (PyObject *) pyfcrypto_serpent_context );
 
 on_error:
-	if( pyfcrypto_des3_context != NULL )
+	if( pyfcrypto_serpent_context != NULL )
 	{
 		Py_DecRef(
-		 (PyObject *) pyfcrypto_des3_context );
+		 (PyObject *) pyfcrypto_serpent_context );
 	}
 	return( NULL );
 }
 
-/* Initializes a des3 context object
+/* Initializes a Serpent context object
  * Returns 0 if successful or -1 on error
  */
-int pyfcrypto_des3_context_init(
-     pyfcrypto_des3_context_t *pyfcrypto_des3_context )
+int pyfcrypto_serpent_context_init(
+     pyfcrypto_serpent_context_t *pyfcrypto_serpent_context )
 {
 	libcerror_error_t *error = NULL;
-	static char *function    = "pyfcrypto_des3_context_init";
+	static char *function    = "pyfcrypto_serpent_context_init";
 
-	if( pyfcrypto_des3_context == NULL )
+	if( pyfcrypto_serpent_context == NULL )
 	{
 		PyErr_Format(
 		 PyExc_ValueError,
-		 "%s: invalid des3 context.",
+		 "%s: invalid Serpent context.",
 		 function );
 
 		return( -1 );
 	}
-	pyfcrypto_des3_context->des3_context = NULL;
+	pyfcrypto_serpent_context->serpent_context = NULL;
 
-	if( libfcrypto_des3_context_initialize(
-	     &( pyfcrypto_des3_context->des3_context ),
+	if( libfcrypto_serpent_context_initialize(
+	     &( pyfcrypto_serpent_context->serpent_context ),
 	     &error ) != 1 )
 	{
 		pyfcrypto_error_raise(
 		 error,
 		 PyExc_MemoryError,
-		 "%s: unable to initialize des3 context.",
+		 "%s: unable to initialize Serpent context.",
 		 function );
 
 		libcerror_error_free(
@@ -228,36 +228,36 @@ int pyfcrypto_des3_context_init(
 	return( 0 );
 }
 
-/* Frees a des3 context object
+/* Frees a Serpent context object
  */
-void pyfcrypto_des3_context_free(
-      pyfcrypto_des3_context_t *pyfcrypto_des3_context )
+void pyfcrypto_serpent_context_free(
+      pyfcrypto_serpent_context_t *pyfcrypto_serpent_context )
 {
 	struct _typeobject *ob_type = NULL;
 	libcerror_error_t *error    = NULL;
-	static char *function       = "pyfcrypto_des3_context_free";
+	static char *function       = "pyfcrypto_serpent_context_free";
 	int result                  = 0;
 
-	if( pyfcrypto_des3_context == NULL )
+	if( pyfcrypto_serpent_context == NULL )
 	{
 		PyErr_Format(
 		 PyExc_ValueError,
-		 "%s: invalid des3 context.",
+		 "%s: invalid Serpent context.",
 		 function );
 
 		return;
 	}
-	if( pyfcrypto_des3_context->des3_context == NULL )
+	if( pyfcrypto_serpent_context->serpent_context == NULL )
 	{
 		PyErr_Format(
 		 PyExc_ValueError,
-		 "%s: invalid des3 context - missing libfcrypto des3 context.",
+		 "%s: invalid Serpent context - missing libfcrypto Serpent context.",
 		 function );
 
 		return;
 	}
 	ob_type = Py_TYPE(
-	           pyfcrypto_des3_context );
+	           pyfcrypto_serpent_context );
 
 	if( ob_type == NULL )
 	{
@@ -279,8 +279,8 @@ void pyfcrypto_des3_context_free(
 	}
 	Py_BEGIN_ALLOW_THREADS
 
-	result = libfcrypto_des3_context_free(
-	          &( pyfcrypto_des3_context->des3_context ),
+	result = libfcrypto_serpent_context_free(
+	          &( pyfcrypto_serpent_context->serpent_context ),
 	          &error );
 
 	Py_END_ALLOW_THREADS
@@ -290,37 +290,37 @@ void pyfcrypto_des3_context_free(
 		pyfcrypto_error_raise(
 		 error,
 		 PyExc_MemoryError,
-		 "%s: unable to free libfcrypto des3 context.",
+		 "%s: unable to free libfcrypto Serpent context.",
 		 function );
 
 		libcerror_error_free(
 		 &error );
 	}
 	ob_type->tp_free(
-	 (PyObject*) pyfcrypto_des3_context );
+	 (PyObject*) pyfcrypto_serpent_context );
 }
 
 /* Sets the key
  * Returns a Python object if successful or NULL on error
  */
-PyObject *pyfcrypto_des3_context_set_key(
-           pyfcrypto_des3_context_t *pyfcrypto_des3_context,
+PyObject *pyfcrypto_serpent_context_set_key(
+           pyfcrypto_serpent_context_t *pyfcrypto_serpent_context,
            PyObject *arguments,
            PyObject *keywords )
 {
 	PyObject *key_string_object = NULL;
 	libcerror_error_t *error    = NULL;
-	static char *function       = "pyfcrypto_des3_context_set_key";
+	static char *function       = "pyfcrypto_serpent_context_set_key";
 	char *key_data              = NULL;
 	static char *keyword_list[] = { "key", NULL };
 	Py_ssize_t key_data_size    = 0;
 	int result                  = 0;
 
-	if( pyfcrypto_des3_context == NULL )
+	if( pyfcrypto_serpent_context == NULL )
 	{
 		PyErr_Format(
 		 PyExc_ValueError,
-		 "%s: invalid des3 context.",
+		 "%s: invalid Serpent context.",
 		 function );
 
 		return( NULL );
@@ -359,8 +359,8 @@ PyObject *pyfcrypto_des3_context_set_key(
 	}
 	Py_BEGIN_ALLOW_THREADS
 
-	result = libfcrypto_des3_context_set_key(
-	          pyfcrypto_des3_context->des3_context,
+	result = libfcrypto_serpent_context_set_key(
+	          pyfcrypto_serpent_context->serpent_context,
 	          (uint8_t *) key_data,
 	          (size_t) ( key_data_size * 8 ),
 	          &error );

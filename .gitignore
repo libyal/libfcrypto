@@ -129,6 +129,7 @@ stamp-h[1-9]
 /libfcrypto/libfcrypto_definitions.h
 /setup.cfg
 /tests/*.exe
+/tests/fcrypto_test_blowfish_context
 /tests/fcrypto_test_des3_context
 /tests/fcrypto_test_error
 /tests/fcrypto_test_rc4_context

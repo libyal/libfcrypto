@@ -6,7 +6,7 @@ $ExitSuccess = 0
 $ExitFailure = 1
 $ExitIgnore = 77
 
-$LibraryTests = "des3_context error rc4_context serpent_context support"
+$LibraryTests = "blowfish_context des3_context error rc4_context serpent_context support"
 $LibraryTestsWithInput = ""
 $OptionSets = ""
 

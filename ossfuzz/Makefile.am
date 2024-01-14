@@ -4,9 +4,18 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/common
 
 bin_PROGRAMS = \
+	crypt_blowfish_ecb_fuzzer \
 	crypt_rc4_fuzzer \
 	crypt_serpent_cbc_fuzzer \
 	crypt_serpent_ecb_fuzzer
+
+crypt_blowfish_ecb_fuzzer_SOURCES = \
+	crypt_blowfish_ecb_fuzzer.cc \
+	ossfuzz_libfcrypto.h
+
+crypt_blowfish_ecb_fuzzer_LDADD = \
+	@LIB_FUZZING_ENGINE@ \
+	../libfcrypto/libfcrypto.la
 
 crypt_rc4_fuzzer_SOURCES = \
 	crypt_rc4_fuzzer.cc \
@@ -40,6 +49,8 @@ distclean: clean
 	-rm -f Makefile
 
 splint-local:
+	@echo "Running splint on crypt_blowfish_ecb_fuzzer ..."
+	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(crypt_blowfish_ecb_fuzzer_SOURCES)
 	@echo "Running splint on crypt_rc4_fuzzer ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(crypt_rc4_fuzzer_SOURCES)
 	@echo "Running splint on crypt_serpent_cbc_fuzzer ..."

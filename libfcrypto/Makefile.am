@@ -8,6 +8,7 @@ lib_LTLIBRARIES = libfcrypto.la
 
 libfcrypto_la_SOURCES = \
 	libfcrypto.c \
+	libfcrypto_blowfish_context.c libfcrypto_blowfish_context.h \
 	libfcrypto_definitions.h \
 	libfcrypto_des3_context.c libfcrypto_des3_context.h \
 	libfcrypto_extern.h \
