@@ -47,6 +47,16 @@ PyObject *pyfcrypto_crypt_des3(
            PyObject *arguments,
            PyObject *keywords );
 
+PyObject *pyfcrypto_crypt_des3_cbc(
+           PyObject *self,
+           PyObject *arguments,
+           PyObject *keywords );
+
+PyObject *pyfcrypto_crypt_des3_ecb(
+           PyObject *self,
+           PyObject *arguments,
+           PyObject *keywords );
+
 PyObject *pyfcrypto_crypt_rc4(
            PyObject *self,
            PyObject *arguments,

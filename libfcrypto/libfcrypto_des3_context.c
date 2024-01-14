@@ -549,10 +549,386 @@ int libfcrypto_internal_des3_context_crypt_block(
 	return( 1 );
 }
 
-/* De- or encrypts a buffer of data using DES3
+/* De- or encrypts a block of data using DES3-CBC (Cipher Block Chaining)
+ * The size must be a multitude of the DES3 block size (8 byte)
  * Returns 1 if successful or -1 on error
  */
-int libfcrypto_des3_crypt(
+int libfcrypto_des3_crypt_cbc(
+     libfcrypto_des3_context_t *context,
+     int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error )
+{
+	uint8_t block_data[ 8 ];
+	uint8_t internal_initialization_vector[ 8 ];
+
+	libfcrypto_internal_des3_context_t *internal_context = NULL;
+	static char *function                                = "libfcrypto_des3_crypt_cbc";
+	size_t data_offset                                   = 0;
+	uint64_t value_64bit                                 = 0;
+
+#if !defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+	uint8_t block_index                                  = 0;
+#endif
+
+	if( context == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid context.",
+		 function );
+
+		return( -1 );
+	}
+	internal_context = (libfcrypto_internal_des3_context_t *) context;
+
+	if( initialization_vector == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid initialization vector.",
+		 function );
+
+		return( -1 );
+	}
+	if( initialization_vector_size != 8 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid initialization vector size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+	if( ( mode != LIBFCRYPTO_BLOWFISH_CRYPT_MODE_ENCRYPT )
+	 && ( mode != LIBFCRYPTO_BLOWFISH_CRYPT_MODE_DECRYPT ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported mode.",
+		 function );
+
+		return( -1 );
+	}
+	if( input_data == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid input data.",
+		 function );
+
+		return( -1 );
+	}
+	/* Check if the input data size is a multitude of 8-byte
+	 */
+	if( ( ( input_data_size & (size_t) 0x07 ) != 0 )
+	 || ( input_data_size < 8 )
+	 || ( input_data_size > (size_t) SSIZE_MAX ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid input data size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+	if( output_data == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid output data.",
+		 function );
+
+		return( -1 );
+	}
+	if( ( output_data_size < input_data_size )
+	 || ( output_data_size > (size_t) SSIZE_MAX ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid output data size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+	if( memory_copy(
+	     internal_initialization_vector,
+	     initialization_vector,
+	     8 ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+		 "%s: unable to copy initialization vector.",
+		 function );
+
+		goto on_error;
+	}
+	while( data_offset < input_data_size )
+	{
+		if( mode == LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT )
+		{
+#if defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+			block_data[ 0 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 0 ];
+			block_data[ 1 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 1 ];
+			block_data[ 2 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 2 ];
+			block_data[ 3 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 3 ];
+			block_data[ 4 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 4 ];
+			block_data[ 5 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 5 ];
+			block_data[ 6 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 6 ];
+			block_data[ 7 ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ 7 ];
+#else
+			for( block_index = 0;
+			     block_index < 8;
+			     block_index++ )
+			{
+				block_data[ block_index ] = input_data[ data_offset++ ] ^ internal_initialization_vector[ block_index ];
+			}
+#endif
+			data_offset -= 8;
+
+			byte_stream_copy_to_uint64_big_endian(
+			 block_data,
+			 value_64bit );
+
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 0 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to encrypt input data with first key.",
+				 function );
+
+				goto on_error;
+			}
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 1 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to decrypt input data with second key.",
+				 function );
+
+				goto on_error;
+			}
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 2 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to encrypt input data with third key.",
+				 function );
+
+				goto on_error;
+			}
+			byte_stream_copy_from_uint64_big_endian(
+			 &( output_data[ data_offset ] ),
+			 value_64bit );
+
+			if( memory_copy(
+			     internal_initialization_vector,
+			     &( output_data[ data_offset ] ),
+			     8 ) == NULL )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_MEMORY,
+				 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+				 "%s: unable to copy encrypted output data to initialization vector.",
+				 function );
+
+				goto on_error;
+			}
+		}
+		else
+		{
+			byte_stream_copy_to_uint64_big_endian(
+			 &( input_data[ data_offset ] ),
+			 value_64bit );
+
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 2 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to decrypt input data with third key.",
+				 function );
+
+				goto on_error;
+			}
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 1 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to endrypt input data with second key.",
+				 function );
+
+				goto on_error;
+			}
+			if( libfcrypto_internal_des3_context_crypt_block(
+			     internal_context,
+			     internal_context->keys[ 0 ],
+			     LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+			     value_64bit,
+			     &value_64bit,
+			     error ) != 1 )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+				 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+				 "%s: unable to decrypt input data with first key.",
+				 function );
+
+				goto on_error;
+			}
+			byte_stream_copy_from_uint64_big_endian(
+			 &( output_data[ data_offset ] ),
+			 value_64bit );
+
+#if defined( LIBFCRYPTO_UNFOLLED_LOOPS )
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 0 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 1 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 2 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 3 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 4 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 5 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 6 ];
+			output_data[ data_offset++ ] ^= internal_initialization_vector[ 7 ];
+#else
+			for( block_index = 0;
+			     block_index < 8;
+			     block_index++ )
+			{
+				output_data[ data_offset++ ] ^= internal_initialization_vector[ block_index ];
+			}
+#endif
+			data_offset -= 8;
+
+			if( memory_copy(
+			     internal_initialization_vector,
+			     &( input_data[ data_offset ] ),
+			     8 ) == NULL )
+			{
+				libcerror_error_set(
+				 error,
+				 LIBCERROR_ERROR_DOMAIN_MEMORY,
+				 LIBCERROR_MEMORY_ERROR_COPY_FAILED,
+				 "%s: unable to copy encrypted input data to initialization vector.",
+				 function );
+
+				goto on_error;
+			}
+		}
+		data_offset += 8;
+	}
+	if( memory_set(
+	     internal_initialization_vector,
+	     0,
+	     8 ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
+		 "%s: unable to clear initialization vector.",
+		 function );
+
+		goto on_error;
+	}
+	if( memory_set(
+	     block_data,
+	     0,
+	     8 ) == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_MEMORY,
+		 LIBCERROR_MEMORY_ERROR_SET_FAILED,
+		 "%s: unable to clear block data.",
+		 function );
+
+		goto on_error;
+	}
+	return( 1 );
+
+on_error:
+	memory_set(
+	 internal_initialization_vector,
+	 0,
+	 8 );
+
+	memory_set(
+	 block_data,
+	 0,
+	 8 );
+
+	return( -1 );
+}
+
+/* De- or encrypts a block of data using DES3-ECB (Electronic CodeBook)
+ * The size must be a multitude of the DES3 block size (8 byte)
+ * Returns 1 if successful or -1 on error
+ */
+int libfcrypto_des3_crypt_ecb(
      libfcrypto_des3_context_t *context,
      int mode,
      const uint8_t *input_data,
@@ -562,7 +938,7 @@ int libfcrypto_des3_crypt(
      libcerror_error_t **error )
 {
 	libfcrypto_internal_des3_context_t *internal_context = NULL;
-	static char *function                                = "libfcrypto_des3_crypt";
+	static char *function                                = "libfcrypto_des3_crypt_ecb";
 	size_t data_offset                                   = 0;
 	uint64_t value_64bit                                 = 0;
 
@@ -602,21 +978,11 @@ int libfcrypto_des3_crypt(
 
 		return( -1 );
 	}
-	if( ( input_data_size < 8 )
-	 || ( input_data_size > (size_t) SSIZE_MAX ) )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
-		 "%s: invalid input data size value out of bounds.",
-		 function );
-
-		return( -1 );
-	}
 	/* Check if the input data size is a multitude of 8-byte
 	 */
-	if( ( input_data_size & (size_t) 0x07 ) != 0 )
+	if( ( ( input_data_size & (size_t) 0x07 ) != 0 )
+	 || ( input_data_size < 8 )
+	 || ( input_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
@@ -638,24 +1004,14 @@ int libfcrypto_des3_crypt(
 
 		return( -1 );
 	}
-	if( output_data_size > (size_t) SSIZE_MAX )
+	if( ( output_data_size < input_data_size )
+	 || ( output_data_size > (size_t) SSIZE_MAX ) )
 	{
 		libcerror_error_set(
 		 error,
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_VALUE_EXCEEDS_MAXIMUM,
-		 "%s: invalid output data size value exceeds maximum.",
-		 function );
-
-		return( -1 );
-	}
-	if( output_data_size < input_data_size )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
-		 "%s: invalid ouput data size smaller than input data size.",
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid output data size value out of bounds.",
 		 function );
 
 		return( -1 );
@@ -779,6 +1135,41 @@ int libfcrypto_des3_crypt(
 		 value_64bit );
 
 		data_offset += 8;
+	}
+	return( 1 );
+}
+
+/* De- or encrypts a buffer of data using DES3
+ * Returns 1 if successful or -1 on error
+ */
+int libfcrypto_des3_crypt(
+     libfcrypto_des3_context_t *context,
+     int mode,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libcerror_error_t **error )
+{
+	static char *function = "libfcrypto_des3_crypt";
+
+	if( libfcrypto_des3_crypt_ecb(
+	     context,
+	     mode,
+	     input_data,
+	     input_data_size,
+	     output_data,
+	     output_data_size,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ENCRYPTION,
+		 LIBCERROR_ENCRYPTION_ERROR_GENERIC,
+		 "%s: unable to crypt data using DES3-ECB.",
+		 function );
+
+		return( -1 );
 	}
 	return( 1 );
 }

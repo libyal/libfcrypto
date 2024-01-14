@@ -667,10 +667,10 @@ on_error:
 
 #endif /* if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
 
-/* Tests the libfcrypto_des3_crypt function
+/* Tests the libfcrypto_des3_crypt_ecb function
  * Returns 1 if successful or 0 if not
  */
-int fcrypto_test_des3_crypt(
+int fcrypto_test_des3_crypt_ecb(
      void )
 {
 	uint8_t key[ 8 ] = {
@@ -724,7 +724,7 @@ int fcrypto_test_des3_crypt(
 
 	/* Test decrypting a buffer of data
 	 */
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -754,7 +754,7 @@ int fcrypto_test_des3_crypt(
 
 	/* Test error cases
 	 */
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          NULL,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -775,7 +775,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          -1,
 	          input_data,
@@ -796,7 +796,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          NULL,
@@ -817,7 +817,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -838,7 +838,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -859,7 +859,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -880,7 +880,7 @@ int fcrypto_test_des3_crypt(
 	libcerror_error_free(
 	 &error );
 
-	result = libfcrypto_des3_crypt(
+	result = libfcrypto_des3_crypt_ecb(
 	          des3_context,
 	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
 	          input_data,
@@ -972,9 +972,11 @@ int main(
 
 #endif /* if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
 
+	/* TODO add tests for libfcrypto_des3_crypt_cbc */
+
 	FCRYPTO_TEST_RUN(
-	 "libfcrypto_des3_crypt",
-	 fcrypto_test_des3_crypt );
+	 "libfcrypto_des3_crypt_ecb",
+	 fcrypto_test_des3_crypt_ecb );
 
 	return( EXIT_SUCCESS );
 

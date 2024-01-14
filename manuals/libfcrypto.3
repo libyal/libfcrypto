@@ -44,7 +44,7 @@ DES3 context functions
 .Ft int
 .Fn libfcrypto_des3_context_set_key "libfcrypto_des3_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
 .Ft int
-.Fn libfcrypto_des3_crypt "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fn libfcrypto_des3_crypt_ecb "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
 .Pp
 RC4 context functions
 .Ft int

@@ -1,11 +1,13 @@
 To do:
-* RC4 add libfcrypto_rc4_crypt_cbc functions
 * Add support for cast5
 * Add support for cast6
-* Add support for blowfish
 * Add support for Anubis
 * Add support for reversed Serpent
 * Add support for Twofish
+* Blowfish add support for CFB and OFB
+* DES3 add support for CBC, CFB and OFB
+* RC4 add libfcrypto_rc4_crypt_cbc functions
+* Serpent add support for CFB and OFB
 
 20170901
 * see `git log' for more recent change log

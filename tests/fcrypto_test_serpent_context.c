@@ -992,7 +992,7 @@ int fcrypto_test_serpent_crypt_ecb_nessie_128bit(
 	return( result );
 }
 
-/* TODO implement test vectors
+/* TODO implement more test vectors
  */
 
 /* The main program
@@ -1022,9 +1022,13 @@ int main(
 	 "libfcrypto_serpent_context_set_key",
 	 fcrypto_test_serpent_context_set_key );
 
+#if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT )
+
 	/* TODO add tests for libfcrypto_internal_serpent_context_encrypt_block */
 
 	/* TODO add tests for libfcrypto_internal_serpent_context_decrypt_block */
+
+#endif /* if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
 
 	/* TODO add tests for libfcrypto_serpent_crypt_cbc */
 

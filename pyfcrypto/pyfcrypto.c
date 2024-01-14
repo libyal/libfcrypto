@@ -64,12 +64,28 @@ PyMethodDef pyfcrypto_module_methods[] = {
 	  "\n"
 	  "De- or encrypts a block of data using Blowfish-ECB." },
 
+	/* TODO remove deprecated crypt_des3 */
+
 	{ "crypt_des3",
 	  (PyCFunction) pyfcrypto_crypt_des3,
 	  METH_VARARGS | METH_KEYWORDS,
 	  "crypt_des3(context, mode, data) -> Bytes\n"
 	  "\n"
-	  "De- or encrypts a block of data using 3DES." },
+	  "De- or encrypts a block of data using DES3." },
+
+	{ "crypt_des3_cbc",
+	  (PyCFunction) pyfcrypto_crypt_des3_cbc,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_des3_cbc(context, mode, initialization_vector, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using DES3-CBC." },
+
+	{ "crypt_des3_ecb",
+	  (PyCFunction) pyfcrypto_crypt_des3_ecb,
+	  METH_VARARGS | METH_KEYWORDS,
+	  "crypt_des3_csb(context, mode, data) -> Bytes\n"
+	  "\n"
+	  "De- or encrypts a block of data using DES3-ECB." },
 
 	{ "crypt_rc4",
 	  (PyCFunction) pyfcrypto_crypt_rc4,
@@ -77,6 +93,8 @@ PyMethodDef pyfcrypto_module_methods[] = {
 	  "crypt_rc4(context, data) -> Bytes\n"
 	  "\n"
 	  "De- or encrypts a block of data using RC4." },
+
+	/* TODO add crypt_serpent_cbc */
 
 	{ "crypt_serpent_ecb",
 	  (PyCFunction) pyfcrypto_crypt_serpent_ecb,
