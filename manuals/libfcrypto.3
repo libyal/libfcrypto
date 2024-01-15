@@ -1,4 +1,4 @@
-.Dd January 14, 2024
+.Dd January 115, 2024
 .Dt libfcrypto 3
 .Os libfcrypto
 .Sh NAME
@@ -43,6 +43,8 @@ DES3 context functions
 .Fn libfcrypto_des3_context_free "libfcrypto_des3_context_t **context" "libfcrypto_error_t **error"
 .Ft int
 .Fn libfcrypto_des3_context_set_key "libfcrypto_des3_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Ft int
+.Fn libfcrypto_des3_crypt_cbc "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *initialization_vector" "size_t initialization_vector_size" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
 .Ft int
 .Fn libfcrypto_des3_crypt_ecb "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
 .Pp

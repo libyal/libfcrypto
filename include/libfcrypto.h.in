@@ -182,17 +182,16 @@ int libfcrypto_des3_context_set_key(
      size_t key_bit_size,
      libfcrypto_error_t **error );
 
-/* De- or encrypts a buffer of data using DES3
- *
- * This function is deprecated use libfcrypto_des3_crypt_ecb instead
- *
+/* De- or encrypts a block of data using DES3-CBC (Cipher Block Chaining)
+ * The size must be a multitude of the DES3 block size (8 byte)
  * Returns 1 if successful or -1 on error
  */
-LIBFCRYPTO_DEPRECATED \
 LIBFCRYPTO_EXTERN \
-int libfcrypto_des3_crypt(
+int libfcrypto_des3_crypt_cbc(
      libfcrypto_des3_context_t *context,
      int mode,
+     const uint8_t *initialization_vector,
+     size_t initialization_vector_size,
      const uint8_t *input_data,
      size_t input_data_size,
      uint8_t *output_data,
@@ -205,6 +204,23 @@ int libfcrypto_des3_crypt(
  */
 LIBFCRYPTO_EXTERN \
 int libfcrypto_des3_crypt_ecb(
+     libfcrypto_des3_context_t *context,
+     int mode,
+     const uint8_t *input_data,
+     size_t input_data_size,
+     uint8_t *output_data,
+     size_t output_data_size,
+     libfcrypto_error_t **error );
+
+/* De- or encrypts a buffer of data using DES3
+ *
+ * This function is deprecated use libfcrypto_des3_crypt_ecb instead
+ *
+ * Returns 1 if successful or -1 on error
+ */
+LIBFCRYPTO_DEPRECATED \
+LIBFCRYPTO_EXTERN \
+int libfcrypto_des3_crypt(
      libfcrypto_des3_context_t *context,
      int mode,
      const uint8_t *input_data,
