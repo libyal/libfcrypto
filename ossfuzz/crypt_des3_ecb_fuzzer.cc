@@ -1,5 +1,5 @@
 /*
- * OSS-Fuzz target for libfcrypto Serpent-ECB crypt function
+ * OSS-Fuzz target for libfcrypto DES3-ECB crypt function
  *
  * Copyright (C) 2011-2024, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -34,28 +34,27 @@ int LLVMFuzzerTestOneInput(
 {
 	uint8_t encrypted_data[ 64 ];
 
-	uint8_t key[ 16 ] = {
-		0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+	uint8_t key[ 8 ] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 };
 
-	libfcrypto_serpent_context_t *context = NULL;
+	libfcrypto_des3_context_t *context = NULL;
 
-	if( libfcrypto_serpent_context_initialize(
+	if( libfcrypto_des3_context_initialize(
 	     &context,
 	     NULL ) != 1 )
 	{
 		return( 0 );
 	}
-	if( libfcrypto_serpent_context_set_key(
+	if( libfcrypto_des3_context_set_key(
 	     context,
 	     key,
-	     128,
+	     64,
 	     NULL ) != 1 )
 	{
 		goto on_error_libfcrypto;
 	}
-	libfcrypto_serpent_crypt_ecb(
+	libfcrypto_des3_crypt_ecb(
 	 context,
-	 LIBFCRYPTO_SERPENT_CRYPT_MODE_ENCRYPT,
+	 LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT,
 	 data,
 	 size,
 	 encrypted_data,
@@ -63,7 +62,7 @@ int LLVMFuzzerTestOneInput(
 	 NULL );
 
 on_error_libfcrypto:
-	libfcrypto_serpent_context_free(
+	libfcrypto_des3_context_free(
 	 &context,
 	 NULL );
 
