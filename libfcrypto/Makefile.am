@@ -1,6 +1,6 @@
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/common \
+	-I../include -I$(top_srcdir)/include \
+	-I../common -I$(top_srcdir)/common \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBFCRYPTO_DLL_EXPORT@
 
@@ -30,13 +30,11 @@ EXTRA_DIST = \
 	libfcrypto.rc \
 	libfcrypto.rc.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libfcrypto_definitions.h \
+	libfcrypto.rc \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libfcrypto_definitions.h
-	-rm -f libfcrypto.rc
-	-rm -f Makefile
 
 sources-local: $(BUILT_SOURCES)
 

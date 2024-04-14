@@ -14,13 +14,11 @@ EXTRA_DIST = \
 	libfcrypto/features.h.in \
 	libfcrypto/types.h.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libfcrypto.h \
+	libfcrypto/definitions.h \
+	libfcrypto/features.h \
+	libfcrypto/types.h \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libfcrypto.h
-	-rm -f libfcrypto/definitions.h
-	-rm -f libfcrypto/features.h
-	-rm -f libfcrypto/types.h
-	-rm -f Makefile
 
