@@ -31,14 +31,17 @@
  */
 #if defined( LIBFCRYPTO_DLL_EXPORT )
 #define LIBFCRYPTO_EXTERN __declspec(dllexport)
+#define LIBFCRYPTO_EXTERN_VARIABLE extern __declspec(dllexport)
 
 #elif defined( LIBFCRYPTO_DLL_IMPORT )
-#define LIBFCRYPTO_EXTERN extern __declspec(dllimport)
+#define LIBFCRYPTO_EXTERN __declspec(dllimport)
+#define LIBFCRYPTO_EXTERN_VARIABLE extern __declspec(dllimport)
 
 #else
 #define LIBFCRYPTO_EXTERN extern
+#define LIBFCRYPTO_EXTERN_VARIABLE extern
 
-#endif
+#endif /* defined( LIBFCRYPTO_DLL_EXPORT ) */
 
 #endif /* !defined( _LIBFCRYPTO_EXTERN_H ) */
 
