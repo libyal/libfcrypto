@@ -745,7 +745,7 @@ on_error:
  * Returns 1 if successful or 0 if not
  */
 int fcrypto_test_serpent_crypt_ecb_with_nessie_test_vector(
-     const uint8_t *key, 
+     const uint8_t *key,
      size_t key_size,
      uint8_t *input_data,
      uint8_t *expected_output_data_iterations_1,

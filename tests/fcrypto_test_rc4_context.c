@@ -716,7 +716,7 @@ on_error:
  * Returns 1 if successful or 0 if not
  */
 int fcrypto_test_rc4_crypt_with_rfc6229_test_vector(
-     const uint8_t *key, 
+     const uint8_t *key,
      size_t key_size,
      uint8_t *expected_output_data_offset_0000,
      uint8_t *expected_output_data_offset_00f0,

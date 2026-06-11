@@ -24,6 +24,19 @@
 
 #include <common.h>
 
+#if !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute )
+#if __has_attribute( visibility )
+#define LIBFCRYPTO_INTERNAL	__attribute__((visibility("hidden"))) extern
+
+#else
+#define LIBFCRYPTO_INTERNAL	extern
+
+#endif /* __has_attribute( visibility ) */
+#else
+#define LIBFCRYPTO_INTERNAL	extern
+
+#endif /* !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute ) */
+
 /* Define HAVE_LOCAL_LIBFCRYPTO for local use of libfcrypto
  */
 #if !defined( HAVE_LOCAL_LIBFCRYPTO )
@@ -32,7 +45,7 @@
 
 #else
 #define LIBFCRYPTO_EXTERN		/* extern */
-#define LIBFCRYPTO_EXTERN_VARIABLE	extern
+#define LIBFCRYPTO_EXTERN_VARIABLE	LIBFCRYPTO_INTERNAL
 
 #endif /* !defined( HAVE_LOCAL_LIBFCRYPTO ) */
 

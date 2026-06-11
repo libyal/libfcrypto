@@ -1,6 +1,6 @@
-.Dd November 27, 2025
-.Dt libfcrypto 3
-.Os libfcrypto
+.Dd June 11, 2026
+.Dt LIBFCRYPTO 3
+.Os
 .Sh NAME
 .Nm libfcrypto.h
 .Nd Library to support encryption formats
@@ -8,86 +8,262 @@
 .In libfcrypto.h
 .Pp
 Support functions
+.nf
 .Ft const char *
-.Fn libfcrypto_get_version "void"
+.Fo libfcrypto_get_version
+.Fa "void"
+.Fc
+.fi
 .Pp
 Error functions
+.nf
 .Ft void
-.Fn libfcrypto_error_free "libfcrypto_error_t **error"
+.Fo libfcrypto_error_free
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_error_fprint "libfcrypto_error_t *error" "FILE *stream"
+.Fo libfcrypto_error_fprint
+.Fa "libfcrypto_error_t *error"
+.Fa "FILE *stream"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_error_sprint "libfcrypto_error_t *error" "char *string" "size_t size"
+.Fo libfcrypto_error_sprint
+.Fa "libfcrypto_error_t *error"
+.Fa "char *string"
+.Fa "size_t size"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_error_backtrace_fprint "libfcrypto_error_t *error" "FILE *stream"
+.Fo libfcrypto_error_backtrace_fprint
+.Fa "libfcrypto_error_t *error"
+.Fa "FILE *stream"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_error_backtrace_sprint "libfcrypto_error_t *error" "char *string" "size_t size"
+.Fo libfcrypto_error_backtrace_sprint
+.Fa "libfcrypto_error_t *error"
+.Fa "char *string"
+.Fa "size_t size"
+.Fc
+.fi
 .Pp
 Blowfish context functions
+.nf
 .Ft int
-.Fn libfcrypto_blowfish_context_initialize "libfcrypto_blowfish_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_blowfish_context_initialize
+.Fa "libfcrypto_blowfish_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_blowfish_context_free "libfcrypto_blowfish_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_blowfish_context_free
+.Fa "libfcrypto_blowfish_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_blowfish_context_set_key "libfcrypto_blowfish_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_blowfish_context_set_key
+.Fa "libfcrypto_blowfish_context_t *context"
+.Fa "const uint8_t *key"
+.Fa "size_t key_bit_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_blowfish_crypt_cbc "libfcrypto_blowfish_context_t *context" "int mode" "const uint8_t *initialization_vector" "size_t initialization_vector_size" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_blowfish_crypt_cbc
+.Fa "libfcrypto_blowfish_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *initialization_vector"
+.Fa "size_t initialization_vector_size"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_blowfish_crypt_ecb "libfcrypto_blowfish_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
-.Sh DESCRIPTION
+.Fo libfcrypto_blowfish_crypt_ecb
+.Fa "libfcrypto_blowfish_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
 .Pp
 DES3 context functions
+.nf
 .Ft int
-.Fn libfcrypto_des3_context_initialize "libfcrypto_des3_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_des3_context_initialize
+.Fa "libfcrypto_des3_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_des3_context_free "libfcrypto_des3_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_des3_context_free
+.Fa "libfcrypto_des3_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_des3_context_set_key "libfcrypto_des3_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_des3_context_set_key
+.Fa "libfcrypto_des3_context_t *context"
+.Fa "const uint8_t *key"
+.Fa "size_t key_bit_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_des3_crypt_cbc "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *initialization_vector" "size_t initialization_vector_size" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_des3_crypt_cbc
+.Fa "libfcrypto_des3_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *initialization_vector"
+.Fa "size_t initialization_vector_size"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_des3_crypt_ecb "libfcrypto_des3_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_des3_crypt_ecb
+.Fa "libfcrypto_des3_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
 .Pp
 RC4 context functions
+.nf
 .Ft int
-.Fn libfcrypto_rc4_context_initialize "libfcrypto_rc4_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_rc4_context_initialize
+.Fa "libfcrypto_rc4_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_rc4_context_free "libfcrypto_rc4_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_rc4_context_free
+.Fa "libfcrypto_rc4_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_rc4_context_set_key "libfcrypto_rc4_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_rc4_context_set_key
+.Fa "libfcrypto_rc4_context_t *context"
+.Fa "const uint8_t *key"
+.Fa "size_t key_bit_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_rc4_crypt "libfcrypto_rc4_context_t *context" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_rc4_crypt
+.Fa "libfcrypto_rc4_context_t *context"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
 .Pp
 Serpent context functions
+.nf
 .Ft int
-.Fn libfcrypto_serpent_context_initialize "libfcrypto_serpent_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_serpent_context_initialize
+.Fa "libfcrypto_serpent_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_serpent_context_free "libfcrypto_serpent_context_t **context" "libfcrypto_error_t **error"
+.Fo libfcrypto_serpent_context_free
+.Fa "libfcrypto_serpent_context_t **context"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_serpent_context_set_key "libfcrypto_serpent_context_t *context" "const uint8_t *key" "size_t key_bit_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_serpent_context_set_key
+.Fa "libfcrypto_serpent_context_t *context"
+.Fa "const uint8_t *key"
+.Fa "size_t key_bit_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_serpent_crypt_cbc "libfcrypto_serpent_context_t *context" "int mode" "const uint8_t *initialization_vector" "size_t initialization_vector_size" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_serpent_crypt_cbc
+.Fa "libfcrypto_serpent_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *initialization_vector"
+.Fa "size_t initialization_vector_size"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
+.nf
 .Ft int
-.Fn libfcrypto_serpent_crypt_ecb "libfcrypto_serpent_context_t *context" "int mode" "const uint8_t *input_data" "size_t input_data_size" "uint8_t *output_data" "size_t output_data_size" "libfcrypto_error_t **error"
+.Fo libfcrypto_serpent_crypt_ecb
+.Fa "libfcrypto_serpent_context_t *context"
+.Fa "int mode"
+.Fa "const uint8_t *input_data"
+.Fa "size_t input_data_size"
+.Fa "uint8_t *output_data"
+.Fa "size_t output_data_size"
+.Fa "libfcrypto_error_t **error"
+.Fc
+.fi
 .Sh DESCRIPTION
 The
 .Fn libfcrypto_get_version
 function is used to retrieve the library version.
 .Sh RETURN VALUES
-Most of the functions return NULL or \-1 on error, dependent on the return type.
-For the actual return values see "libfcrypto.h".
+Most of the functions return NULL or \-1 on error, dependent on the return \
+type.
+For the actual return values see
+.In libfcrypto.h .
 .Sh ENVIRONMENT
 None
 .Sh FILES
 None
+.Sh SEE ALSO
+.In libfcrypto.h
+.Sh AUTHORS
+.An Joachim Metz <joachim.metz@gmail.com>
 .Sh BUGS
-Please report bugs of any kind on the project issue tracker: https://github.com/libyal/libfcrypto/issues
-.Sh AUTHOR
-These man pages are generated from "libfcrypto.h".
+Please report bugs of any kind on the project issue tracker: \
+https://github.com/libyal/libfcrypto/issues
 .Sh COPYRIGHT
 Copyright (C) 2017-2026, Joachim Metz <joachim.metz@gmail.com>.
 .sp
 This is free software; see the source for copying conditions.
-There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-.Sh SEE ALSO
-the libfcrypto.h include file
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A \
+PARTICULAR PURPOSE.

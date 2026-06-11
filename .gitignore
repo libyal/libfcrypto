@@ -1,6 +1,6 @@
 # Files to ignore by git
 #
-# Version: 20251129
+# Version: 20260604
 
 # Generic auto-generated build files
 *~
@@ -128,13 +128,22 @@ stamp-h[1-9]
 /libfcrypto/libfcrypto.rc
 /libfcrypto/libfcrypto_definitions.h
 /pyproject.toml
+/tests/*.dir
 /tests/*.exe
+/tests/*.log
+/tests/*.tmp
+/tests/atconfig
+/tests/atlocal
 /tests/fcrypto_test_blowfish_context
 /tests/fcrypto_test_des3_context
 /tests/fcrypto_test_error
 /tests/fcrypto_test_rc4_context
 /tests/fcrypto_test_serpent_context
 /tests/fcrypto_test_support
+/tests/package.m4
+/tests/test_library
+/tests/test_manpages
+/tests/test_python_module
 /tests/tmp*
 
 # Local library dependencies specific files
