@@ -4,8 +4,6 @@ AM_CPPFLAGS = \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBFCRYPTO_DLL_IMPORT@
 
-check_PYTHONdir = $(abs_top_builddir)
-
 BUILT_SOURCES = package.m4
 
 check_AUTOTESTS = \
@@ -16,7 +14,7 @@ if HAVE_PYTHON_TESTS
 check_AUTOTESTS += test_python_module
 endif
 
-check_PYTHON_SCRIPTS = \
+check_SCRIPTS = \
 	pyfcrypto_test_blowfish_context.py \
 	pyfcrypto_test_des3_context.py \
 	pyfcrypto_test_rc4_context.py \
@@ -135,13 +133,18 @@ package.m4: $(top_srcdir)/configure.ac
 	  echo 'm4_define([AT_PACKAGE_BUGREPORT], [$(PACKAGE_BUGREPORT)])' ; \
 	} > $@
 
-test_library: package.m4 test_library.at test_macros.at
+test_library: \
+	package.m4 \
+	test_library.at \
+	test_macros.at
 
-test_python_module: package.m4 test_python_module.at
+test_python_module: \
+	package.m4 \
+	test_python_module.at
 
 EXTRA_DIST = \
 	$(check_AUTOTESTS:=.at) \
-	$(check_PYTHON_SCRIPTS) \
+	$(check_SCRIPTS) \
 	package.m4 \
 	test_macros.at
 
