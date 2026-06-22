@@ -138,6 +138,10 @@ test_library: \
 	test_library.at \
 	test_macros.at
 
+test_manpages: \
+	package.m4 \
+	test_manpages.at
+
 test_python_module: \
 	package.m4 \
 	test_python_module.at
