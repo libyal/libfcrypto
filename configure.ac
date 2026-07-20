@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
   [libfcrypto],
-  [20260624],
+  [20260720],
   [https://github.com/libyal/libfcrypto/issues])
 
 AC_CONFIG_SRCDIR(
