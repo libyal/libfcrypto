@@ -45,7 +45,7 @@ static uint8_t libfcrypto_des3_expansion_table[ 48 ] = {
 	12, 13, 12, 13, 14, 15, 16, 17, 16, 17, 18, 19, 20, 21, 20, 21,
 	22, 23, 24, 25, 24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32, 1 };
 
-static uint8_t libfcrypto_des3_post_sbox_permulation[ 32 ] = {
+static uint8_t libfcrypto_des3_post_sbox_permutation[ 32 ] = {
 	16, 7, 20, 21, 29, 12, 28, 17, 1, 15, 23, 26, 5, 18, 31, 10,
 	2, 8, 24, 14, 32, 27, 3, 9, 19, 13, 30, 6, 22, 11, 4, 25 };
 
@@ -352,12 +352,13 @@ int libfcrypto_internal_des3_context_crypt_block(
 	static char *function                = "libfcrypto_internal_des3_context_crypt_block";
 	uint64_t bit_mask                    = 0;
 	uint64_t permuted_output_value       = 0;
+	uint64_t sub_key_value               = 0;
 	uint64_t value_64bit                 = 0;
 	uint32_t function_result             = 0;
 	uint32_t permutation_lower_32bit     = 0;
 	uint32_t permutation_upper_32bit     = 0;
-	uint32_t permuted_choice_lower_32bit = 0;
-	uint32_t permuted_choice_upper_32bit = 0;
+	uint32_t permuted_choice_lower_28bit = 0;
+	uint32_t permuted_choice_upper_28bit = 0;
 	uint32_t sbox_output                 = 0;
 	uint32_t value_32bit                 = 0;
 	uint8_t bit_shift                    = 0;
@@ -416,8 +417,8 @@ int libfcrypto_internal_des3_context_crypt_block(
 		value_64bit <<= 1;
 		value_64bit  |= ( input_value >> bit_shift ) & 1ULL;
 	}
-	permutation_upper_32bit = (uint32_t) ( ( value_64bit >> 32 ) & 0xffffffffUL );
 	permutation_lower_32bit = (uint32_t) ( value_64bit & 0xffffffffUL );
+	permutation_upper_32bit = (uint32_t) ( ( value_64bit >> 32 ) & 0xffffffffUL );
 
 	/* Calculate the key schedule
 	 */
@@ -432,8 +433,8 @@ int libfcrypto_internal_des3_context_crypt_block(
 		value_64bit <<= 1;
 		value_64bit  |= ( key_value >> bit_shift ) & 1ULL;
 	}
-	permuted_choice_upper_32bit = (uint32_t) ( ( value_64bit >> 28 ) & 0x0fffffffUL );
-	permuted_choice_lower_32bit = (uint32_t) ( value_64bit & 0x0fffffffUL );
+	permuted_choice_lower_28bit = (uint32_t) ( value_64bit & 0x0fffffffUL );
+	permuted_choice_upper_28bit = (uint32_t) ( ( value_64bit >> 28 ) & 0x0fffffffUL );
 
 	/* Calculate the 16 sub keys
 	 */
@@ -443,17 +444,17 @@ int libfcrypto_internal_des3_context_crypt_block(
 	{
 		iteration_shift = libfcrypto_des3_iteration_shift[ sub_key_index ];
 
-		permuted_choice_upper_32bit = ( ( permuted_choice_upper_32bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_upper_32bit >> 27 ) & 0x00000001UL );
-		permuted_choice_lower_32bit = ( ( permuted_choice_lower_32bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_lower_32bit >> 27 ) & 0x00000001UL );
+		permuted_choice_upper_28bit = ( ( permuted_choice_upper_28bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_upper_28bit >> 27 ) & 0x00000001UL );
+		permuted_choice_lower_28bit = ( ( permuted_choice_lower_28bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_lower_28bit >> 27 ) & 0x00000001UL );
 
 		if( iteration_shift == 2 )
 		{
-			permuted_choice_upper_32bit = ( ( permuted_choice_upper_32bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_upper_32bit >> 27 ) & 0x00000001UL );
-			permuted_choice_lower_32bit = ( ( permuted_choice_lower_32bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_lower_32bit >> 27 ) & 0x00000001UL );
+			permuted_choice_upper_28bit = ( ( permuted_choice_upper_28bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_upper_28bit >> 27 ) & 0x00000001UL );
+			permuted_choice_lower_28bit = ( ( permuted_choice_lower_28bit << 1 ) & 0x0fffffffUL ) | ( ( permuted_choice_lower_28bit >> 27 ) & 0x00000001UL );
 		}
-		value_64bit = ( (uint64_t) permuted_choice_upper_32bit << 28 ) | permuted_choice_lower_32bit;
+		value_64bit = ( (uint64_t) permuted_choice_upper_28bit << 28 ) | permuted_choice_lower_28bit;
 
-		sub_keys[ sub_key_index ] = 0;
+		sub_key_value = 0;
 
 		for( table_index = 0;
 		     table_index < 48;
@@ -461,9 +462,10 @@ int libfcrypto_internal_des3_context_crypt_block(
 		{
 			bit_shift = 56 - libfcrypto_des3_permuted_choice_table2[ table_index ];
 
-			sub_keys[ sub_key_index ] <<= 1;
-			sub_keys[ sub_key_index ]  |= ( value_64bit >> bit_shift ) & 1ULL;
+			sub_key_value <<= 1;
+			sub_key_value  |= ( value_64bit >> bit_shift ) & 1ULL;
 		}
+		sub_keys[ sub_key_index ] = sub_key_value;
 	}
 	sbox_output = 0;
 
@@ -520,7 +522,7 @@ int libfcrypto_internal_des3_context_crypt_block(
 		     table_index < 32;
 		     table_index++ )
 		{
-			bit_shift = 32 - libfcrypto_des3_post_sbox_permulation[ table_index ];
+			bit_shift = 32 - libfcrypto_des3_post_sbox_permutation[ table_index ];
 
 			function_result <<= 1;
 			function_result  |= ( sbox_output >> bit_shift ) & 1UL;

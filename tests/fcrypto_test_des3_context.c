@@ -667,6 +667,351 @@ on_error:
 
 #endif /* if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
 
+/* Tests the libfcrypto_des3_crypt_cbc function
+ * Returns 1 if successful or 0 if not
+ */
+int fcrypto_test_des3_crypt_cbc(
+     void )
+{
+	uint8_t key[ 16 ] = {
+		'T', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a', ' ', 'k', 'e', 'y', '1', '2', '3' };
+
+	uint8_t encrypted_data[ 32 ] = {
+		0x65, 0x86, 0x6b, 0x09, 0x01, 0x57, 0xd7, 0x64, 0xe4, 0xa4, 0xb3, 0x7e, 0x80, 0xd3, 0xc3, 0x7f,
+		0x71, 0x7b, 0x45, 0x7d, 0x3a, 0x4c, 0x0a, 0x20, 0x2e, 0x32, 0xd1, 0xcf, 0x8a, 0xf1, 0xa0, 0x21 };
+
+	uint8_t unencrypted_data[ 32 ] = {
+		'T', 'h', 'i', 's', ' ', 'i', 's', ' ', 's', 'e', 'c', 'r', 'e', 't', ' ', 'e',
+		'n', 'c', 'r', 'y', 'p', 't', 'e', 'd', ' ', 't', 'e', 'x', 't', '!', '!', '!' };
+
+	uint8_t initialization_vector[ 8 ] = { 'T' , 'h' , 'i' , 's' , ' ' , 'I' , 'V' , '!' };
+
+	uint8_t output_data[ 32 ];
+
+	libcerror_error_t *error                = NULL;
+	libfcrypto_des3_context_t *des3_context = NULL;
+	int result                              = 0;
+
+	/* Initialize test
+	 */
+	result = libfcrypto_des3_context_initialize(
+	          &des3_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "des3_context",
+	 des3_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libfcrypto_des3_context_set_key(
+	          des3_context,
+	          key,
+	          128,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test decrypting a buffer of data
+	 */
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = memory_compare(
+	          output_data,
+	          unencrypted_data,
+	          32 );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	/* Test encrypting a buffer of data
+	 */
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_ENCRYPT,
+	          initialization_vector,
+	          8,
+	          unencrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = memory_compare(
+	          output_data,
+	          encrypted_data,
+	          32 );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	/* Test error cases
+	 */
+	result = libfcrypto_des3_crypt_cbc(
+	          NULL,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          -1,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          NULL,
+	          8,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          (size_t) SSIZE_MAX + 1,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          NULL,
+	          32,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          (size_t) SSIZE_MAX + 1,
+	          output_data,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          32,
+	          NULL,
+	          32,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libfcrypto_des3_crypt_cbc(
+	          des3_context,
+	          LIBFCRYPTO_DES3_CRYPT_MODE_DECRYPT,
+	          initialization_vector,
+	          8,
+	          encrypted_data,
+	          32,
+	          output_data,
+	          (size_t) SSIZE_MAX + 1,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up
+	 */
+	result = libfcrypto_des3_context_free(
+	          &des3_context,
+	          &error );
+
+	FCRYPTO_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "des3_context",
+	 des3_context );
+
+	FCRYPTO_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( des3_context != NULL )
+	{
+		libfcrypto_des3_context_free(
+		 &des3_context,
+		 NULL );
+	}
+	return( 0 );
+}
+
 /* Tests the libfcrypto_des3_crypt_ecb function
  * Returns 1 if successful or 0 if not
  */
@@ -972,7 +1317,9 @@ int main(
 
 #endif /* if defined( __GNUC__ ) && !defined( LIBFCRYPTO_DLL_IMPORT ) */
 
-	/* TODO add tests for libfcrypto_des3_crypt_cbc */
+	FCRYPTO_TEST_RUN(
+	 "libfcrypto_des3_crypt_cbc",
+	 fcrypto_test_des3_crypt_cbc );
 
 	FCRYPTO_TEST_RUN(
 	 "libfcrypto_des3_crypt_ecb",
