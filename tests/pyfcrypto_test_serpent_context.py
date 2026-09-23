@@ -28,26 +28,26 @@ import pyfcrypto
 
 
 class BlowfishContextTypeTests(unittest.TestCase):
-  """Tests the serpent_context type."""
+    """Tests the serpent_context type."""
 
-  def test_initialize(self):
-    """Tests the __init__ function."""
-    serpent_context = pyfcrypto.serpent_context()
-    self.assertIsNotNone(serpent_context)
+    def test_initialize(self):
+        """Tests the __init__ function."""
+        serpent_context = pyfcrypto.serpent_context()
+        self.assertIsNotNone(serpent_context)
 
-  def test_set_key(self):
-    """Tests the set_key function."""
-    serpent_context = pyfcrypto.serpent_context()
-    serpent_context.set_key(b'0123456789abcdef')
+    def test_set_key(self):
+        """Tests the set_key function."""
+        serpent_context = pyfcrypto.serpent_context()
+        serpent_context.set_key(b"0123456789abcdef")
 
-    with self.assertRaises(ValueError):
-      serpent_context.set_key(None)
+        with self.assertRaises(ValueError):
+            serpent_context.set_key(None)
 
 
 if __name__ == "__main__":
-  argument_parser = argparse.ArgumentParser()
+    argument_parser = argparse.ArgumentParser()
 
-  options, unknown_options = argument_parser.parse_known_args()
-  unknown_options.insert(0, sys.argv[0])
+    options, unknown_options = argument_parser.parse_known_args()
+    unknown_options.insert(0, sys.argv[0])
 
-  unittest.main(argv=unknown_options, verbosity=2)
+    unittest.main(argv=unknown_options, verbosity=2)

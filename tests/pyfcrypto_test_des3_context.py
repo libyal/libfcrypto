@@ -28,26 +28,26 @@ import pyfcrypto
 
 
 class Des3ContextTypeTests(unittest.TestCase):
-  """Tests the des3_context type."""
+    """Tests the des3_context type."""
 
-  def test_initialize(self):
-    """Tests the __init__ function."""
-    des3_context = pyfcrypto.des3_context()
-    self.assertIsNotNone(des3_context)
+    def test_initialize(self):
+        """Tests the __init__ function."""
+        des3_context = pyfcrypto.des3_context()
+        self.assertIsNotNone(des3_context)
 
-  def test_set_key(self):
-    """Tests the set_key function."""
-    des3_context = pyfcrypto.des3_context()
-    des3_context.set_key(b'0123456')
+    def test_set_key(self):
+        """Tests the set_key function."""
+        des3_context = pyfcrypto.des3_context()
+        des3_context.set_key(b"0123456")
 
-    with self.assertRaises(ValueError):
-      des3_context.set_key(None)
+        with self.assertRaises(ValueError):
+            des3_context.set_key(None)
 
 
 if __name__ == "__main__":
-  argument_parser = argparse.ArgumentParser()
+    argument_parser = argparse.ArgumentParser()
 
-  options, unknown_options = argument_parser.parse_known_args()
-  unknown_options.insert(0, sys.argv[0])
+    options, unknown_options = argument_parser.parse_known_args()
+    unknown_options.insert(0, sys.argv[0])
 
-  unittest.main(argv=unknown_options, verbosity=2)
+    unittest.main(argv=unknown_options, verbosity=2)

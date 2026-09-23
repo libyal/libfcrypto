@@ -28,26 +28,26 @@ import pyfcrypto
 
 
 class Rc4ContextTypeTests(unittest.TestCase):
-  """Tests the rc4_context type."""
+    """Tests the rc4_context type."""
 
-  def test_initialize(self):
-    """Tests the __init__ function."""
-    rc4_context = pyfcrypto.rc4_context()
-    self.assertIsNotNone(rc4_context)
+    def test_initialize(self):
+        """Tests the __init__ function."""
+        rc4_context = pyfcrypto.rc4_context()
+        self.assertIsNotNone(rc4_context)
 
-  def test_set_key(self):
-    """Tests the set_key function."""
-    rc4_context = pyfcrypto.rc4_context()
-    rc4_context.set_key(b'01234')
+    def test_set_key(self):
+        """Tests the set_key function."""
+        rc4_context = pyfcrypto.rc4_context()
+        rc4_context.set_key(b"01234")
 
-    with self.assertRaises(ValueError):
-      rc4_context.set_key(None)
+        with self.assertRaises(ValueError):
+            rc4_context.set_key(None)
 
 
 if __name__ == "__main__":
-  argument_parser = argparse.ArgumentParser()
+    argument_parser = argparse.ArgumentParser()
 
-  options, unknown_options = argument_parser.parse_known_args()
-  unknown_options.insert(0, sys.argv[0])
+    options, unknown_options = argument_parser.parse_known_args()
+    unknown_options.insert(0, sys.argv[0])
 
-  unittest.main(argv=unknown_options, verbosity=2)
+    unittest.main(argv=unknown_options, verbosity=2)
